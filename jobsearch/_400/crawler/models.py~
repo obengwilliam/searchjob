@@ -7,7 +7,8 @@ class Seed(models.Model):
 	'''
 	This model is responsible for storing all information about our seed pages
 	so we have the seed urls, the date the user in the admin page added ,which user added it ,
-	the maximum number of pages to crawl and the maximum depth the crawler can reach
+	the maximum number of pages to crawl and the maximum depth the crawler should go withe respect to
+	it each url.
 	'''
         seeds_urls=models.CharField(max_length=255,null=False,unique=True)
         created_at=models.DateField(auto_now=True)

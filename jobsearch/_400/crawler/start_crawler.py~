@@ -68,5 +68,7 @@ if __name__=='__main__':
       while len(seed_list)!=0:
             seed=seed_list.pop();
             crawl_web(seed['url'],seed['max_pages'],seed['max_depth'])
+            
+     
 else:
     pass
