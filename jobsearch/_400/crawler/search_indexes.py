@@ -1,9 +1,26 @@
-def add_to_search_index(index,keyword,url):
+
+print 1
+
+def add_to_search_index(keyword,url):
+  
   try:
-    if keyword in index:
-        index[keyword].append(url)
-    else:
-        index[keyword]=[url]
-    
+        
+        from pymongo import MongoClient
+        
+        connection=MongoClient()
+       
   except:
-      print 'problem from search indexes'
+        print 'connection problem'
+  db=connection.jobsdbs
+  
+  
+
+  
+try:    
+  if db.crawler_index.find_one({'keyword':keyword}):
+        db.crawler_index.update({"keyword":keyword},{"$addToSet":{"urls":url}})
+  else:
+        db.crawler_index.insert({'keyword':keyword,'urls':[url]})
+    
+except:
+    print 'problem making index'  

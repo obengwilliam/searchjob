@@ -1,14 +1,20 @@
 from django.db import models
-#from djangotoolbox.fields import ListField
+from djangotoolbox.fields import ListField
 from django.contrib.auth.models import User
+from forms import StringListField
+ 
+class UrlsField(ListField):
+    def formfield(self, **kwargs):
+        return models.Field.formfield(self, StringListField, **kwargs)
+ 
+
 
 # Create your models here.
 class Seed(models.Model):
 	'''
 	This model is responsible for storing all information about our seed pages
 	so we have the seed urls, the date the user in the admin page added ,which user added it ,
-	the maximum number of pages to crawl and the maximum depth the crawler should go withe respect to
-	it each url.
+	the maximum number of pages to crawl and the maximum depth the crawler can reach
 	'''
         seeds_urls=models.CharField(max_length=255,null=False,unique=True)
         created_at=models.DateField(auto_now=True)
@@ -19,3 +25,8 @@ class Seed(models.Model):
        
         def __unicode__(self):
               return u'URL: %s  MAXIMUMDEPTH: %s  MAXIMUMPAGE: %s  DATECREATED: %s    USER:%s' %(self.seeds_urls,self.max_depth,self.max_pages,self.created_at,self.submitter)
+
+
+class Index(models.Model):
+      keyword=models.CharField(max_length=255,null=False)
+      urls=UrlsField()

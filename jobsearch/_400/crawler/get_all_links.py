@@ -14,9 +14,12 @@ def links(content_soup,url):
     links = []
     try:
         content_soup_all_a=content_soup.find_all('a')
+        content_soup_all_base=content_soup.find_all('base')
+        print content_soup_all_base
         for a in content_soup_all_a:
             
             href=a.get('href')
+           
         
             parse_url=urlparse(href)
             
@@ -25,10 +28,12 @@ def links(content_soup,url):
             elif href=="":
                 pass
             elif parse_url.fragment and not parse_url.scheme:
+                 pass
                 
-                pass
             elif parse_url.scheme:
+                
                 if check_if_seed_hostname(parse_url):
+                    
                     links.append(str(href))
                     
                 else:
@@ -38,17 +43,23 @@ def links(content_soup,url):
                 
                 
             else:
+                '''
+                converting relative urls into absolute urls 
+                '''
+                absolute_link=urljoin(url,href.replace('../','').replace('./',''))
                 
-                absolute_link=urljoin(url,str(href))
                 links.append(absolute_link)
                 
+              
     except:
-        print 'Error in get_all_links.py'+url
+        print 'Error in get_all_links.py '+url
         return links
     links=list(set(links))
     return links
+if __name__=='__main__':
+    c=urlopen('http://www.ghanacurrentjobs.com/')
+    page=c.read();
 
-#c=urlopen('http://www.google.com')
-#page=c.read();
-
-#print links(soup(page),'http://www.google.com')
+    links(soup(page),'http://www.ghanacurrentjobs.com/'),
+else:
+    pass

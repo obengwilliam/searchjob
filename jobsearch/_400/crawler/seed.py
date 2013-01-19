@@ -6,9 +6,11 @@ This function receives input in the form of a parsed url and then return true or
 same hostname with those listed in our seed csv file..... 
 '''
 
+
+
 def check_if_seed_hostname(parse_url):
-  try:
-    
+#  try:
+    '''
     if 'www' in parse_url.netloc.split('.'):
         parse_url_hostname=parse_url.netloc
     else:
@@ -25,12 +27,30 @@ def check_if_seed_hostname(parse_url):
                     return True
                       
         return False
-  except:
-    print 'problem in seed.py'
+    '''
+
+    
+    if 'www' in parse_url.netloc.split('.'):
+        parse_url_hostname=parse_url.netloc
+        
+    else:
+        parse_url_hostname= 'www.' +'.'.join(parse_url.netloc.split('.'))
+        
+    seed_list=main()
+    
+    for seeds in seed_list:
+         
+         
+         if parse_url_hostname==urlparse(seeds['url']).netloc:
+                    return True
+         
+        
+#  except:
+#    print 'problem in seed.py'
                                       
     
   
-#print check_if_seed_hostname(urlparse('http://joblistghana.com'))
+#print check_if_seed_hostname(urlparse('http://www.joblistghana.com'))
  
            
     

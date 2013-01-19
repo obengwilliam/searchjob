@@ -1,6 +1,13 @@
 from django.db import models
-#from djangotoolbox.fields import ListField
+from djangotoolbox.fields import ListField
 from django.contrib.auth.models import User
+from forms import StringListField
+ 
+class UrlsField(ListField):
+    def formfield(self, **kwargs):
+        return models.Field.formfield(self, StringListField, **kwargs)
+ 
+
 
 # Create your models here.
 class Seed(models.Model):
@@ -17,4 +24,10 @@ class Seed(models.Model):
       
        
         def __unicode__(self):
-              return u'URL: %s  MAXIMUMDEPTH: %s  MAXIMUMPAGE: %s  DATECREATED: %s    USER:%s' %(self.seeds_urls,self.max_depth,self.max_pages,self.created_at,self.submitter)
+              return self.seeds_urls
+              #return u'URL: %s  MAXIMUMDEPTH: %s  MAXIMUMPAGE: %s  DATECREATED: %s    USER:%s' %#(self.seeds_urls,self.max_depth,self.max_pages,self.created_at,self.submitter)
+
+
+class Index(models.Model):
+      keyword=models.CharField(max_length=255,null=False)
+      urls=UrlsField()

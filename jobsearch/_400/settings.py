@@ -115,8 +115,9 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'djangotoolbox',
+
     'django.contrib.admin',
+    'djangotoolbox',
     'django_mongodb_engine',
     'crawler'
     # Uncomment the next line to enable the admin:
