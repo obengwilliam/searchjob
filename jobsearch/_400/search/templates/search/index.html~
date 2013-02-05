@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+
+{% block content %}
+<div class='searchdiv' >
+<div class='formdiv'>
+<form method="get"  action="/search/jobtitle">
+<input type='text' name='job' value='Enter job title here'/>
+</form>
+</div>
+
+</div>
+
+{% endblock content %}

@@ -28,15 +28,9 @@ def crawl_web(seed,mx_pg,mx_dp):
     while tocrawl:
         
         page_url ,depth= tocrawl.pop(0)
-        print 'This is the maximum number of pages crawled'+' '+str(len(crawled))
-        print 'This is the DEPTH' , depth,page_url
-    
-        
-        
-        
-        
         
         if (page_url not in crawled) and (len(crawled)< mx_pg) and (depth <=mx_dp):
+            print 'Crawling %s ,depth %d'%(page_url,depth)
             content_soup ,base_robot_parsed_url= get_page(page_url)
             
             make_index(page_url, content_soup)
@@ -46,7 +40,7 @@ def crawl_web(seed,mx_pg,mx_dp):
             
             print '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
             #yet to check for urls that contains urls that linked to the same pages
-        
+        print 'This is the number of pages crawled'+' '+str(len(crawled))
     return True
 
 def main():

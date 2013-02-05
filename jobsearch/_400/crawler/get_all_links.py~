@@ -11,11 +11,11 @@ from seed import check_if_seed_hostname
 from urlparse import urlparse,urljoin
 
 def links(content_soup,url):
-    links = []
-    try:
+      links = []
+      try:
         content_soup_all_a=content_soup.find_all('a')
-        content_soup_all_base=content_soup.find_all('base')
-        print content_soup_all_base
+        #content_soup_all_base=content_soup.find_all('base')
+        
         for a in content_soup_all_a:
             
             href=a.get('href')
@@ -36,6 +36,7 @@ def links(content_soup,url):
                     
                     links.append(str(href))
                     
+                    
                 else:
                     
                     pass
@@ -50,12 +51,12 @@ def links(content_soup,url):
                 
                 links.append(absolute_link)
                 
-              
-    except:
-        print 'Error in get_all_links.py'+url
-        return links
-    links=list(set(links))
-    return links
+      
+      except:
+           print 'Error in get_all_links.py '+url
+           return links
+      links=list(set(links))
+      return links
 if __name__=='__main__':
     c=urlopen('http://www.ghanacurrentjobs.com/')
     page=c.read();

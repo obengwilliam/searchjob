@@ -6,6 +6,20 @@ This function receives input in the form of a parsed url and then return true or
 same hostname with those listed in our seed csv file..... 
 '''
 
+def main():
+    try:
+        from pymongo import MongoClient
+        
+        connection=MongoClient()
+       
+    except:
+        print 'connection problem'
+    db=connection.jobsdbs
+    seed_urls=db.crawler_seed.find()
+    seed_list=[]
+    for record in seed_urls:
+        seed_list.append({'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']})
+    return seed_list
 
 
 def check_if_seed_hostname(parse_url):
@@ -48,9 +62,8 @@ def check_if_seed_hostname(parse_url):
 #  except:
 #    print 'problem in seed.py'
                                       
-    
-  
-#print check_if_seed_hostname(urlparse('http://www.joblistghana.com'))
+if __name__=='__main__':
+      print check_if_seed_hostname(urlparse('http://ghanacurrentjobs.com'))
  
-           
+         
     
