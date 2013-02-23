@@ -16,7 +16,7 @@ class Seed(models.Model):
 	so we have the seed urls, the date the user in the admin page added ,which user added it ,
 	the maximum number of pages to crawl and the maximum depth the crawler can reach
 	'''
-        seeds_urls=models.CharField(max_length=255,null=False,unique=True)
+        seeds_urls=models.URLField(max_length=1000)
         created_at=models.DateField(auto_now=True)
         max_depth=models.PositiveIntegerField(default=10)
         max_pages=models.PositiveIntegerField(default=10000)
@@ -31,3 +31,13 @@ class Seed(models.Model):
 class Index(models.Model):
       keyword=models.CharField(max_length=255,null=False)
       urls=UrlsField()
+      def __unicode__(self):
+            return self.keywords
+
+class FilterUrl(models.Model):
+       filter_url=models.URLField(max_length=1000)
+
+       def __unicode__(self):
+             return self.filter_url
+
+

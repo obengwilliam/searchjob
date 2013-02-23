@@ -1,16 +1,12 @@
-<!Doctype html>
+<!DOCTYPE html>
 <html>
-   <head>
-   <meta charset='utf-8'>
-   <title> {%block title %}Jooble {%endblock title%}</title>
-   <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css"/>
-   </head>
-   <body>
-    
- 
-    {%block content %}
-    {%endblock content%}
+  <head>
+        <meta charset='utf-8'>
+        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css" media='screen'>
+        <title> {% block title%} Jooble  {% endblock title %} </title>
 
-    
-   </body>
-</html> 
+  </head>
+{% block content%}
+  
+{% endblock content %}
+</html>

@@ -2,13 +2,35 @@
 
 
 {% block content %}
-<div class='searchdiv' >
-<div class='formdiv'>
-<form method="get"  action="/search/jobtitle">
-<input type='text' name='job' value='Enter job title here'/>
-</form>
+<body>
+     <div id='toppane'>
+     <div class='wrapper'>
+          <h1><a href='/'>Jooble</a><h1>
+     </div>
+     </div>
+
+     <div id='middlepane'>
+                     <div class='search'>
+                     At jooble We give you the best job index you can ever find!!!!!!
+                     <div>
+                    
+                
+                     <div class='midwrapper'>  <div class='formdiv'>
+                         <form method="get"  action="/search/jobtitle">
+                              <input type='text' name='job' value="Enter job title here" />
+                              <button type="submit" >Search</button>
+                         </form>
+                     </div>
+</div>
+     </div>
+
+<div id='bottom'> 
 </div>
 
-</div>
+    
+
+</body>
+
+
 
 {% endblock content %}

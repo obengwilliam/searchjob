@@ -36,7 +36,7 @@ def make_index( url, content_soup):
         
         if word not in stopwords and (not word.isdigit()):
            from search_indexes import add_to_search_index
-           #add_to_search_index(word,url)
+           add_to_search_index(word,url)
            
            
 if __name__=='__main__':  

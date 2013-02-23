@@ -18,7 +18,7 @@ from get_all_links import links as all_links
 from union import add_to_tocrawl
 from indexpg import make_index
 
-def crawl_web(seed,mx_pg,mx_dp):
+def crawl_web(seed,mx_pg,mx_dp,filter_list):
     
     tocrawl = [[seed,0]]
     
@@ -28,6 +28,11 @@ def crawl_web(seed,mx_pg,mx_dp):
     while tocrawl:
         
         page_url ,depth= tocrawl.pop(0)
+        
+        if page_url in filter_list:
+           print 'CAN NOT BE CRAWLED.......filtered....%s'%page_url
+          
+           return False
         
         if (page_url not in crawled) and (len(crawled)< mx_pg) and (depth <=mx_dp):
             print 'Crawling %s ,depth %d'%(page_url,depth)
@@ -53,18 +58,23 @@ def main():
         print 'connection problem'
     db=connection.jobsdbs
     seed_urls=db.crawler_seed.find()
+    filter_url=db.crawler_filterurl.find()
+    
     seed_list=[]
+    filter_list=[]
+
     for record in seed_urls:
         seed_list.append({'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']})
-    return seed_list
+    for url in filter_url:
+         filter_list.append(str(url['filter_url']))
+    
+    return seed_list,filter_list
   
 
 if __name__=='__main__':
-      
-          seed_list=main()
-      
+      seed_list,filter_list=main()
       while len(seed_list)!=0:
             seed=seed_list.pop();
-            crawl_web(seed['url'],seed['max_pages'],seed['max_depth'])
+            crawl_web(seed['url'],seed['max_pages'],seed['max_depth'],filter_list)
 else:
     pass
