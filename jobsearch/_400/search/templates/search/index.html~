@@ -3,6 +3,7 @@
 
 {% block content %}
 <body>
+ 
      <div id='toppane'>
      <div class='wrapper'>
           <h1><a href='/'>Jooble</a><h1>
@@ -10,22 +11,35 @@
      </div>
 
      <div id='middlepane'>
+                     <!--
                      <div class='search'>
-                     At jooble We give you the best job index you can ever find!!!!!!
-                     <div>
+                     </div>-->
                     
                 
-                     <div class='midwrapper'>  <div class='formdiv'>
-                         <form method="get"  action="/search/jobtitle">
-                              <input type='text' name='job' value="Enter job title here" />
-                              <button type="submit" >Search</button>
-                         </form>
-                     </div>
-</div>
+                     
+                             <div class='formdiv' '>
+                                   <p>At jooble We give you bthe best job index in Ghana</p>
+                                   <form method="get"  action="/search/jobtitle">
+                                   <input type="search" name='job' value="Enter job title here" autofocus/>
+                                   <button type="submit" id="submit_button" >Search</button>
+                                   </form>
+                              </div>
+                               
+
+                              
+                      
      </div>
+ <div id='social_nc'>
+                                    <iframe width="43" frameborder="0" height="190" src="/social_media" marginheight="0" marginwidth="0" scrolling="no">
+                                   </iframe>
+
+
+
+    </div>
 
 <div id='bottom'> 
 </div>
+
 
     
 

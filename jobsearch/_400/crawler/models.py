@@ -32,12 +32,25 @@ class Index(models.Model):
       keyword=models.CharField(max_length=255,null=False)
       urls=UrlsField()
       def __unicode__(self):
-            return self.keywords
+            return self.keyword
 
 class FilterUrl(models.Model):
        filter_url=models.URLField(max_length=1000)
 
        def __unicode__(self):
              return self.filter_url
+
+
+
+class Page_info(models.Model):
+       title=models.CharField(max_length=255)
+       body=models.TextField()
+       url=models.URLField(max_length=1000)
+  
+       def  __unicode__(self):
+            return self.title
+class Rank(models.Model):
+       url=models.URLField(max_length=1000)
+       rank=models.FloatField()
 
 

@@ -8,7 +8,14 @@ def search(request):
 
 def response(request):
      jobtitle=request.GET.get('job','')
+
+
      
      
      return HttpResponse(jobtitle)
+
+
+
+def socialmedia(request):
+     return render_to_response('search/social_network.html')
 

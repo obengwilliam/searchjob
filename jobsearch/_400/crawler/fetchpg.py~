@@ -41,7 +41,7 @@ def get_page(url):
                             return soup(''),''
                         the_page=response.read()
                         
-                        print the_page
+                      
                         return soup(the_page),url
                     except URLError as connection_error:
                         print "Failed to reach server"
@@ -59,9 +59,9 @@ def get_page(url):
         except URLError as connection_error:
              print 'FAILED TO REACH SERVER::'+url
              return soup(''),''
-        #except:
-            #print 'Check url again '+ url
-            #return soup(''),''
+        except:
+            print 'Check url again '+ url
+            return soup(''),''
         
         #  print 'Error from fetchpg'
         

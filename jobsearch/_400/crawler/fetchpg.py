@@ -27,7 +27,7 @@ def get_page(url):
         
                 if not robot_parse.can_fetch('jobcrawler 1.1', url):
                     print "This seed page can not be crawled based on robot.txt"
-                    return soup(''),''
+                    return soup('','lxml'),''
                 
                 else:
                     try:
@@ -38,30 +38,30 @@ def get_page(url):
                         request.add_header('User-Agent', useragent)
                         response=urlopen(request)
                         if response.info().type not in ['text/html']:
-                            return soup(''),''
+                            return soup('','lxml'),''
                         the_page=response.read()
                         
                       
-                        return soup(the_page),url
+                        return soup(the_page,'lxml'),url
                     except URLError as connection_error:
                         print "Failed to reach server"
                         print 'Error code:',connection_error.code
-                        return soup(''),''
+                        return soup('','lxml'),''
                         
                     except HTTPError as _400_to_500:
-                        print "The serve coudnot fulfill the request"
+                        print "The server coudnot fulfill the request"
                         print 'Error code:',check_response(_400_to_500.code)
-                        return soup(''),''
+                        return soup('','lxml'),''
                     
                     else:  
                         print 'EVERYTHING IS FINE'
 
         except URLError as connection_error:
              print 'FAILED TO REACH SERVER::'+url
-             return soup(''),''
+             return soup('','lxml'),''
         except:
             print 'Check url again '+ url
-            return soup(''),''
+            return soup('','lxml'),''
         
         #  print 'Error from fetchpg'
         

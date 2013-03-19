@@ -8,5 +8,5 @@
   </head>
 {% block content%}
   
-  {% endblock content %}
+{% endblock content %}
 </html>

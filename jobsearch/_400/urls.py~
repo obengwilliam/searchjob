@@ -5,6 +5,7 @@ from django.conf import settings
 from django.contrib import admin
 from search.views import search
 from search.views import response
+from search.views import socialmedia
 admin.autodiscover()
 
 urlpatterns = patterns('',
@@ -17,6 +18,7 @@ urlpatterns = patterns('',
 
     # Uncomment the next line to enable the admin:
     url(r'^admin/', include(admin.site.urls)),
+    url(r'social_media$',socialmedia),
     url(r'^search$', search),
     url(r'^static/(?P<path>.*)$', 'django.views.static.serve', {'document_root' : settings.STATIC_ROOT,}),
     url(r'^search/jobtitle$',response),

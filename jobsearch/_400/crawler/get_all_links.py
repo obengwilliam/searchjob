@@ -4,8 +4,8 @@ making use of the class get_next_target class
 '''
 
 
-from urllib2 import urlopen
-from bs4 import BeautifulSoup as soup
+
+
 from seed import check_if_seed_hostname
 
 from urlparse import urlparse,urljoin
@@ -42,7 +42,7 @@ def links(content_soup,url):
                     pass
                 
                 
-                
+                 
             else:
                 '''
                 converting relative urls into absolute urls 
@@ -53,14 +53,21 @@ def links(content_soup,url):
                 
       
       except:
+           import sys
            print 'Error in get_all_links.py '+url
+           print sys.exc_info()
            return links
       links=list(set(links))
       return links
+
+
+
 if __name__=='__main__':
-    c=urlopen('http://www.ghanacurrentjobs.com/')
+    from bs4 import BeautifulSoup as soup
+    from urllib2 import urlopen
+    c=urlopen('http://jobs.classifieds1000.com/Ghana/Internet_Jobs/i_would_like_to_be_a_vender')
     page=c.read();
 
-    print links(soup(page),'http://www.ghanacurrentjobs.com/'),
+    print links(soup(page,'lxml'),'http://www.ghanacurrentjobs.com/'),
 else:
     pass
