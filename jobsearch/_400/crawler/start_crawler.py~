@@ -18,7 +18,7 @@ from get_all_links import links as all_links
 from union import add_to_tocrawl
 from indexpg import make_index
 from page_info import get_page_data as info
-from job_rank import compute_ranks
+from job_rank import compute_ranks  as ranks
 
 def crawl_web(seed,mx_pg,mx_dp,filter_list):
     
@@ -64,7 +64,7 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list):
 
 
 
-def main():
+def main(ranks={}):
     try:
         from pymongo import MongoClient
         
@@ -73,18 +73,24 @@ def main():
     except:
         print 'connection problem'
     db=connection.jobsdbs
-    seed_urls=db.crawler_seed.find()
-    filter_url=db.crawler_filterurl.find()
     
-    seed_list=[]
-    filter_list=[]
+    if ranks:
+       assert db.connection==connection
+       #db.crawler_ranks.insert(ranks)
+       return True
+    else:
+    	seed_urls=db.crawler_seed.find()
+    	filter_url=db.crawler_filterurl.find()
+    
+    	seed_list=[]
+    	filter_list=[]
 
-    for record in seed_urls:
-        seed_list.append({'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']})
-    for url in filter_url:
-         filter_list.append(str(url['filter_url']))
+    	for record in seed_urls:
+        	seed_list.append({'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']})
+    	for url in filter_url:
+         	filter_list.append(str(url['filter_url']))
     
-    return seed_list,filter_list
+    	return seed_list,filter_list
   
 
 
@@ -96,6 +102,12 @@ if __name__=='__main__':
       while len(seed_list)!=0:
             seed=seed_list.pop();
             graph=crawl_web(seed['url'],seed['max_pages'],seed['max_depth'],filter_list)
-            print compute_ranks(graph),'This is the best graph'
+            print ranks(graph)
+            main()
+            '''
+            Now we insert the ranks of our graph into our mongodb 
+            '''
+            
+            
 else:
     pass

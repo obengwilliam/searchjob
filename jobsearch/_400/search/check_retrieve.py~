@@ -1,16 +1,20 @@
-from crawler import spell_check as check
+from spell_check import spell_check
 
-def ch_re(jobtitles):
+def ch_re(jobtitiles):
     keywords=[]
-    for i in jobtitiles:
-         
-         if not check(i):
-             suggested_keywords=check(i);
- 
-             for i in suggested_keywords:
-                  keywords.append(i)
-             
+    for word in jobtitiles:
+        if type(spell_check(word)) !=list:
+           keywords.append(word)
+
+        else:
+            
+             [keywords.append(words) for words in spell_check(word)]
+            
+
+
+    return keywords
 
 
 if __name__=='__main__':
-   ch_re(['','computer','science'])
+   print ch_re(['computr wod','2'])
+

@@ -5,6 +5,12 @@ from bs4 import BeautifulSoup as soup
 
 from responses import check_response
 
+import socket
+
+# timeout in seconds
+timeout = 5
+socket.setdefaulttimeout(timeout)
+
  
 def get_page(url):
         try:
@@ -15,7 +21,7 @@ def get_page(url):
             
                 base_url=parse_dict.scheme + '://'+ parse_dict.netloc
                 robot_url=urljoin(base_url,'/robots.txt')
-                parse_robot.user_agent='jocrawler 1.1'
+                parse_robot.user_agent='jocrawler 1.1(http://about.me/jooble)'
             
                 robot_parse=parse_robot.RobotFileParserLookalike()
                 print robot_parse
@@ -43,19 +49,21 @@ def get_page(url):
                         
                       
                         return soup(the_page,'lxml'),url
+                    except HTTPError as _400_to_500:
+                        print "The server coudnot fulfill the request"
+                        print 'Error code:',check_response(_400_to_500.code),_400_to_500.reason
+                        return soup('','lxml'),''
+
                     except URLError as connection_error:
                         print "Failed to reach server"
                         print 'Error code:',connection_error.code
                         return soup('','lxml'),''
                         
-                    except HTTPError as _400_to_500:
-                        print "The server coudnot fulfill the request"
-                        print 'Error code:',check_response(_400_to_500.code)
-                        return soup('','lxml'),''
+                    
                     
                     else:  
                         print 'EVERYTHING IS FINE'
-
+        
         except URLError as connection_error:
              print 'FAILED TO REACH SERVER::'+url
              return soup('','lxml'),''
@@ -68,7 +76,7 @@ def get_page(url):
     
 #we will write seperate models that will fetch urls fetch and insert into models
 if __name__=='__main__':
-    print get_page('http://www.jobsinghana.com/jobs/?cat=10')   
+    print get_page('http://www.twitter.com')   
 else:
     pass   
             

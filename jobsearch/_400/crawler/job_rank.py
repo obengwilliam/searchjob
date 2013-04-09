@@ -1,4 +1,8 @@
 def compute_ranks(graph):
+    """
+    The dumping factore depicts that there is an 80% chance that
+    a user will continue on links at each page.
+    """
     d = 0.8 # damping factor
     numloops = 10
     

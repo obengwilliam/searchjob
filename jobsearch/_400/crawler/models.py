@@ -49,8 +49,19 @@ class Page_info(models.Model):
   
        def  __unicode__(self):
             return self.title
+
+
+
+
 class Rank(models.Model):
        url=models.URLField(max_length=1000)
        rank=models.FloatField()
+       def __unicode__(self):
+           return self.url
+
+class Stopword(models.Model):
+       words=models.CharField(max_length=255)
+       def __unicode__(self):
+           return self.words
 
 

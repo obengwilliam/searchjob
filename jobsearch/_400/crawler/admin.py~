@@ -1,4 +1,4 @@
-from django.contrib import admin
+cd from django.contrib import admin
 from crawler.models import Seed,Index,FilterUrl,Page_info,Rank
 
 def urls(instance):
@@ -26,7 +26,7 @@ class Ranks_admin(admin.ModelAdmin):
 
 
 
-admin.site.register(Ranks,Ranks_admin)
+admin.site.register(Rank,Ranks_admin)
 admin.site.register(FilterUrl)
 admin.site.register(Seed,SeedAdmin)
 admin.site.register(Index,IndexAdmin)

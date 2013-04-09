@@ -1,27 +1,49 @@
 
 
-def add_to_search_index(keyword,url,title,body):
+def add_to_search_index(keyword,url,title,body,location,count):
   
   try:
         
         from pymongo import MongoClient
         
         connection=MongoClient()
+        db=connection.jobsdbs
+        
        
   except:
         print 'connection problem'
-  db=connection.jobsdbs
-  
-  
 
   
-#try:    
-  if db.crawler_index.find_one({'keyword':keyword}):
-        db.crawler_index.update({"keyword":keyword},{"$addToSet":{"urls":url}})
-  else:
-        db.crawler_index.insert({'keyword':keyword,'urls':[url]})
+        assert db.connection==connection
+
+  
+  page_id=''
+  
   if  not db.crawler_page_info.find_one({'url':url}):
-      db.crawler_page_info.insert({'title':title,'body':body,'url':url})
+      		page=db.crawler_page_info.insert({'title':title,'body':body,'url':url})
+                page_id=page
+  else:
+             page_id=db.crawler_page_info.find_one({'url':url})['_id']
+             
+  
+#try: 
+  if not db.crawler_index.find_one({'keyword':keyword}):
+        
+        db.crawler_index.insert({'keyword':keyword,'doc':[{'id':page_id,'location':[location],'count':count}]},safe=True)
+   
+  
+  elif db.crawler_index.find_one({'keyword':keyword,'doc.id':page_id}) 	:
+  
+        db.crawler_index.update({"keyword":keyword, 'doc.id':page_id},{"$addToSet":{"doc.$.location":location}},safe=True)
+  elif db.crawler_index.find_one({'keyword':keyword}):
+         
+
+         db.crawler_index.update({'keyword':keyword},{'$addToSet':{'doc':{'location':[location], 'count':count, 'id':page_id}}},safe=True)
+
+  
+
+
+
     
 #except:
 #   print 'problem making index'  

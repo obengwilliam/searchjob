@@ -1,13 +1,16 @@
 {% extends "base.html" %}
 
-
+<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css" media='screen'>
 {% block content %}
 <body>
  
      <div id='toppane'>
      <div class='wrapper'>
-          <h1><a href='/'>Jooble</a><h1>
+          <h1><a href='/'>Jooble</a> </h1>
+          <span style='float:right'>About Us    &nbsp&nbsp&nbsp Sign Up </span>
+          <!--<h1><a href='/'>Jooble</a></h1> -->
      </div>
+     
      </div>
 
      <div id='middlepane'>
@@ -18,9 +21,9 @@
                 
                      
                              <div class='formdiv' '>
-                                   <p>At jooble We give you bthe best job index in Ghana</p>
+                                   <p>At jooble We give you the best job index in Ghana</p>
                                    <form method="get"  action="/search/jobtitle">
-                                   <input type="search" name='job' value="Enter job title here" autofocus/>
+                                   <input type="search" name='job' placeholder="Enter job title here" autofocus/>
                                    <button type="submit" id="submit_button" >Search</button>
                                    </form>
                               </div>
@@ -29,13 +32,7 @@
                               
                       
      </div>
- <div id='social_nc'>
-                                    <iframe width="43" frameborder="0" height="190" src="/social_media" marginheight="0" marginwidth="0" scrolling="no">
-                                   </iframe>
-
-
-
-    </div>
+ 
 
 <div id='bottom'> 
 </div>

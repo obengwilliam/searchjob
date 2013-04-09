@@ -2,11 +2,14 @@
 <html>
   <head lang='en'>
         <meta charset='utf-8'>
-        <link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css" media='screen'>
+        {% block css%}<link rel="stylesheet" href="/static/bootstrap/css/bootstrap.css" media='screen'>{% endblock css%}
+        <!--<link rel="stylesheet" href="/static/bootstrap/css/joobleresults.css" media='screen'>-->
+      
         <title> {% block title%} Jooble  {% endblock title %} </title>
 
   </head>
 {% block content%}
+
   
 {% endblock content %}
 </html>

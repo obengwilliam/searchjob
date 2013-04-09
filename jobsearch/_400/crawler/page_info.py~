@@ -1,4 +1,4 @@
-from bs4 import BeautifulSoup as soup
+
 def get_page_data(soup_read,url):
     '''
     This page is responsible for storing information on each     page we crawl.This module will also be responsible for using the tf-idf of each page.
@@ -21,7 +21,7 @@ def get_page_data(soup_read,url):
            soup_read.style.decompose()
        content=soup_read.body.get_text(" ",strip=True).split()[:100]
        content=' '.join(content)
-       print content
+       
 
         
     except:
@@ -33,6 +33,10 @@ def get_page_data(soup_read,url):
 
 
 if __name__=='__main__':
+   import socket
+   #setting default socket timeout
+   timeout=10
+   socket.setdefaulttimeout(timeout)
    from urllib2 import urlopen
    page=urlopen('http://www.happykidschool.org')
    page_read=page.read()

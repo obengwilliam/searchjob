@@ -42,7 +42,7 @@ def links(content_soup,url):
                     pass
                 
                 
-                
+                 
             else:
                 '''
                 converting relative urls into absolute urls 
