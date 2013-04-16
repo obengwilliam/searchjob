@@ -124,7 +124,7 @@ INSTALLED_APPS = (
     'djangotoolbox',
     'django_mongodb_engine',
     'crawler',
-    'search'
+    'search',
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

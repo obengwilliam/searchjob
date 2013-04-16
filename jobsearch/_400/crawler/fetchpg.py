@@ -36,7 +36,7 @@ def get_page(url):
                     return soup('','lxml'),''
                 
                 else:
-                    try:
+                    
                     
                         useragent='jobcrawler 1.1'
                         #headers={'User-Agent':useragent}
@@ -49,27 +49,24 @@ def get_page(url):
                         
                       
                         return soup(the_page,'lxml'),url
-                    except HTTPError as _400_to_500:
-                        print "The server coudnot fulfill the request"
-                        print 'Error code:',check_response(_400_to_500.code),_400_to_500.reason
-                        return soup('','lxml'),''
-
-                    except URLError as connection_error:
-                        print "Failed to reach server"
-                        print 'Error code:',connection_error.code
-                        return soup('','lxml'),''
+                    
                         
                     
                     
-                    else:  
-                        print 'EVERYTHING IS FINE'
+              
         
         except URLError as connection_error:
              print 'FAILED TO REACH SERVER::'+url
              return soup('','lxml'),''
+        except HTTPError as _400_to_500:
+                        print "The server coudnot fulfill the request"
+                        print 'Error code:',check_response(_400_to_500.code),_400_to_500.reason
+                        return soup('','lxml'),''
         except:
             print 'Check url again '+ url
             return soup('','lxml'),''
+        else:
+             print 'ok'
         
         #  print 'Error from fetchpg'
         

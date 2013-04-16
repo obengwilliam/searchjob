@@ -1,6 +1,10 @@
 
 
 def add_to_search_index(keyword,url,title,body,location,count):
+  '''
+    (str(),str(),str(),str(),str(),str())->
+  '''
+  
   
   try:
         
@@ -30,21 +34,17 @@ def add_to_search_index(keyword,url,title,body,location,count):
   if not db.crawler_index.find_one({'keyword':keyword}):
         
         db.crawler_index.insert({'keyword':keyword,'doc':[{'id':page_id,'location':[location],'count':count}]},safe=True)
-        if keyword=='next_el':
-            print keyword,location,3,page_id
    
   
   elif db.crawler_index.find_one({'keyword':keyword,'doc.id':page_id}) 	:
-  
+	
+	'''
         db.crawler_index.update({"keyword":keyword, 'doc.id':page_id},{"$addToSet":{"doc.$.location":location}},safe=True)
-        if keyword=="next_el":
-            print keyword,location,1,page_id
   elif db.crawler_index.find_one({'keyword':keyword}):
+       
          
 
-         db.crawler_index.update({'keyword':keyword},{'$addToSet':{'doc':{'location':[location], 'count':count, 'id':page_id}}},safe=True)
-         if keyword=="next_el":
-            print keyword,location,2,page_id
+        db.crawler_index.update({'keyword':keyword},{'$addToSet':{'doc':{'location':[location], 'count':count, 'id':page_id}}},safe=True)
 
   
 

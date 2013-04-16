@@ -2,16 +2,32 @@
 from django.http import HttpResponse
 from django.shortcuts import render_to_response
 from crawler.models import Stopword
+from retrieve import termsearch,phrasesearch
+from check_retrieve import ch_re as checks
+import re
+from stemming.porter2 import stem 
+
+
 
 def search(request):
     return render_to_response('search/index.html')
 
 def response(request):
      jobtitle=request.GET.get('job','')
+     if re.match('"',jobtitle):
+        #we begin phrasesearch here
+
+        print 'happy now'
+     else:
+         print termsearch([stem(i)for i in checks(str(jobtitle).split(' '))])
+         
      
-     from check_retrieve import ch_re as checks
-     keywords=checks(str(jobtitle).split(' '))
-     keywords_stopedwords=query_operation(keywords)
+    
+     
+    
+     
+   
+     #keywords_stopedwords=query_operation(keywords)
      
 
      

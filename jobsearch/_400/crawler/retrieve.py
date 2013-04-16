@@ -24,33 +24,56 @@ def load_index(inverted_index=False):
 
 
 
-      
-     for index in db.crawler_index.find():
-          invindex[index['keyword']]=[]
-          for doc in index['doc']:
-              invindex[index['keyword']].append([doc['id'],doc['location'],doc['count']])
-     if inverted_index==True:
-         return invindex
-     else:
-         return True
+     try: 
+	     for index in db.crawler_index.find():
+	          invindex[index['keyword']]=[]
+	          for doc in index['doc']:
+	              invindex[index['keyword']].append([doc['id'],doc['location'],doc['count']])
+	     if inverted_index==True:
+	         return invindex
+	     else:
+	         return True
+     except:
+           print 'Exception from loading index into memory'
+           return True
 
 
 def termsearch (terms):#searches a full inverted index
     '''list()->set()
 
-      This document is responsible for performing a term search on a full inverted index
+      This document is responsible for performing a term search on a full inverted index.
+      An empty list is not allowed
     >>>termsearch(['computer','science'])
     [ObjectId('51607f5640ade63653e31e69'...]
     >>>termsearch(['computerse','science'])#if terms are not present it returns a [1]
     '''
+    
     if load_index():#The first thing we do here is to make sure the full inverted index is loaded in memory
-        return reduce(set.intersection ,(set(x[0]for x in doc) for keyword,doc in invindex.items() if keyword in terms),set([1]))
+        try:
+            return reduce(set.intersection ,(set(x[0]for x in doc) for keyword,doc in invindex.items() if keyword in terms))
+        except:
+            print 'Exception from termsearch:check it out'
+            return set([])
+   
+
+
+
+
+   
+
+
+
+
+
+
+
+
+
 
 
 
 def phrasesearch(phrase):
-	'''
-          
+	'''  
 	str()->list()
         This function is responsible for taking a phrase and then returning a list of document id's  
 	
@@ -59,17 +82,38 @@ def phrasesearch(phrase):
 	'''
         
         phrasewords=phrase.strip().strip('"').split()
+        
+       
         firstword,otherwords=phrasewords[0],phrasewords[1:]
         found=[]
+       
+        
         for id in termsearch(phrasewords):
-         	for firstindx in (indx for t,indx in restructuring_index()[firstword] if t==id):
-                     if all( (id, firstindx+1 + otherindx) in finvindex[otherwords]
-                            for otherindx, otherword in enumerate(otherwords) ):
-                         found.append(id)
+            #The above gives us all posible doc ids that have those word in arguments
+           
+            
+            for firstindex in (ind for t,ind in finvindex[firstword] if t==id):
+               
+               if all((id,firstindex+1+otherindex) in finvindex[otherword] for otherindex,otherword in enumerate(otherwords)):
+                    found.append(id)
         return found
+           
+   
 
 
-                     
+
+
+
+
+
+
+
+
+
+         
+                 
+
+                    
 def restructuring_index():
      '''
 	dict()->dict()
@@ -82,7 +126,7 @@ def restructuring_index():
 	 'it': [('ObjectId('51607f5640ade63653e31e69')', 0), ('TObjectId('51607f5640ade63653e31e69'), 3)]
 
      '''
-     finvindex={}
+     
      try:
      	connection=MongoClient()
      	db=connection.jobsdbs
@@ -92,14 +136,41 @@ def restructuring_index():
      
       
      for index in db.crawler_index.find():
-          finvindex[index['keyword']]=[]
-          [finvindex[index['keyword']].append([doc['id'],location]) for doc in index['doc'] for location in doc['location']]
-     return finvindex
+          finvindex[index['keyword']]=set()
+          [finvindex[index['keyword']].add((doc['id'],location)) for doc in index['doc'] for location in doc['location']]
+     return True
+
+
+
+
+
+'''
+finvindex={}
+
+
+def check_finvindex(keyword):
+	try:    
+                restructuring_index()
+		return finvindex[keyword]
+	except:
+                
+		return set(('',''))
+
+
+
+print check_finvindex('acco')
+'''
+finvindex={}
    
 
 if __name__=='__main__':
      from pprint import pprint as pp
-     pp(phrasesearch('hello'))
      
+     if restructuring_index():
+	pp(termsearch('check'))
+     
+
+
+
 
 

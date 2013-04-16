@@ -20,7 +20,7 @@ from indexpg import make_index
 from page_info import get_page_data as info
 from job_rank import compute_ranks  as ranks
 
-def crawl_web(seed,mx_pg,mx_dp,filter_list):
+def crawl_web(seed,mx_pg,mx_dp,filter_list=None):
     
     tocrawl = [[seed,0]]
     
@@ -31,11 +31,12 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list):
     while tocrawl:
         
         page_url ,depth= tocrawl.pop(0)
-        
+        '''
         if page_url in filter_list:
            print 'CAN NOT BE CRAWLED.......filtered....%s'%page_url
           
            return False
+        '''
         
         if (page_url not in crawled) and (len(crawled)< mx_pg) and (depth <=mx_dp):
             print 'Crawling %s ,depth %d'%(page_url,depth)
@@ -48,7 +49,7 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list):
             outlinks=all_links(content_soup,base_robot_parsed_url)
             '''
             Below am trying to obtain the relation between the page_url and it links. This 
-            pairs form a graph to be used in our page_rank calculation
+            pairs form a graph to be used in our importance score calculation
             '''
             graph[page_url]=outlinks
             add_to_tocrawl(tocrawl, outlinks,depth,crawled)
@@ -64,7 +65,16 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list):
 
 
 
+
+
 def main(ranks={}):
+    '''
+    ()->list()
+
+    This module is responsible for returning all seed list from the database
+    >>>main()
+    ['http://www.jobsinghana.com','http://www.jobsin.com'....]
+    '''
     try:
         from pymongo import MongoClient
         
@@ -80,34 +90,50 @@ def main(ranks={}):
        return True
     else:
     	seed_urls=db.crawler_seed.find()
-    	filter_url=db.crawler_filterurl.find()
+    	#filter_url=db.crawler_filterurl.find()
     
-    	seed_list=[]
-    	filter_list=[]
-
+    	seed_list=[{'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']} for record in seed_urls]
+    	#filter_list=[]
+        '''
     	for record in seed_urls:
         	seed_list.append({'url':record['seeds_urls'],'max_pages':record['max_pages'],'max_depth':record['max_depth']})
+        '''
+	'''
     	for url in filter_url:
          	filter_list.append(str(url['filter_url']))
+	'''
     
-    	return seed_list,filter_list
+    	return seed_list
   
 
 
 
 
 
+
+
+
+
 if __name__=='__main__':
-      seed_list,filter_list=main()
-      while len(seed_list)!=0:
-            seed=seed_list.pop();
-            graph=crawl_web(seed['url'],seed['max_pages'],seed['max_depth'],filter_list)
-            print ranks(graph)
-            main()
-            '''
-            Now we insert the ranks of our graph into our mongodb 
-            '''
+	try:
+	      seed_list=main()
+	      while len(seed_list)!=0:
+	            seed=seed_list.pop();
+                     
+	            graph=crawl_web(seed['url'],seed['max_pages'],seed['max_depth'])
+	            print ranks(graph)
+	            #main()
+	            '''
+	            Now we insert the ranks of our graph into our mongodb 
+	            '''
             
             
-else:
-    pass
+	except:
+               print 'error'
+               import sys
+               from pymongo import MongoClient
+               connection=MongoClient()
+               db=connection.jobsdbs
+               db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
+               
+   
