@@ -25,3 +25,14 @@ def restructuring_index(finvindex):
           finvindex[index['keyword']]=set()
           [finvindex[index['keyword']].add((doc['id'],location)) for doc in index['doc'] for location in doc['location']]
      return True
+
+
+if __name__=='__main__':
+   import profile
+   print profile.run('restructuring_index({})')
+
+
+
+
+
+

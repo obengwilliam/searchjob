@@ -9,12 +9,12 @@ class IndexAdmin(admin.ModelAdmin):
     search_fields=('keyword',)
 
 class SeedAdmin(admin.ModelAdmin):
-      list_display = ['seeds_urls', 'max_depth','max_pages']
+      list_display = ['seeds_urls', 'max_depth','max_pages','completed','details']
 
 
 
 class Page_info_admin(admin.ModelAdmin):
-       list_display=['title','url','body']
+       list_display=['title','url','body','rank_score','doc_digest']
        search_fields=('title','url')
 
 class Ranks_admin(admin.ModelAdmin):
@@ -31,7 +31,8 @@ class Error_log_admin(admin.ModelAdmin):
        ordering=('-date',)
 
 
-
+class Web_stat_admin(admin.ModelAdmin):
+	list_display=['removed_urls','robotstxt_request','excluded_urls','Http_Request']
 
 
 
@@ -42,6 +43,7 @@ admin.site.register(Index,IndexAdmin)
 admin.site.register(Page_info,Page_info_admin)
 admin.site.register(Stopword,Stopwords_admin)
 admin.site.register(Error_log,Error_log_admin)
+admin.site.register(Web_Statistics,Web_stat_admin)
 
 
 

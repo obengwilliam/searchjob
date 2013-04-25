@@ -4,6 +4,11 @@ from urlparse import urlparse ,urljoin
 from bs4 import BeautifulSoup as soup
 
 from responses import check_response
+from pymongo import MongoClient
+
+try:connection=MongoClient(); db=connection.jobsdbs ;collection=db.crawler_web_statistics 
+except: print 'problem with database connection with mongodb'
+
 
 import socket
 
@@ -37,12 +42,13 @@ def get_page(url):
                 
                 else:
                     
-                    
+                        # This is where we count the number of urls that did not allow us not to crawl
                         useragent='jobcrawler 1.1'
                         #headers={'User-Agent':useragent}
                         request=Request(url)
                         request.add_header('User-Agent', useragent)
                         response=urlopen(request)
+			#collection.insert() this is where we perform an autoincrement the number of url requested for
                         if response.info().type not in ['text/html']:
                             return soup('','lxml'),''
                         the_page=response.read()

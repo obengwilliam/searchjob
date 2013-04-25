@@ -1,0 +1,117 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0px 20px 0px 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #333333;
+    background:#E0E0DD;/*url(/static/img/grain1.jpg) no-repeat fixed top right */
+        }
+.container{
+    display: block;
+    float: right;
+    margin: 110px 50px 50px 50px;
+    width: 40%;
+    height:50%;
+    /*border:1px solid #ccc;*/
+    border-radius: 4px;
+}
+
+.required{
+    border: none;
+    width: 400px;
+    height: 40px;
+    font-size: 25px;
+    color: #3acfce;
+    
+    
+}
+.required:hover{
+    border: 2px solid #3acfce;
+    
+}
+.requirederror{
+    border: none;
+    width: 400px;
+    height: 100px;
+    font-size: 30px;
+    /*border:1px solid red;*/
+    
+}
+.required:focus{
+    border: 2px solid #3acfce;
+    outline: hidden;
+}
+
+
+.form-row{
+    display: block;
+    padding: 10px;
+    /*border: 1px solid #ccc;*/
+    margin:0 5px 5px 5px;
+    height: 200px;
+    width: 450px;
+}
+::-moz-placeholder {
+    color: #999999;
+    text-transform: none;
+    }
+::-ms-input-placeholder {
+    color: #999999;
+    text-transform: none;
+}
+
+::-webkit-input-placeholder {
+    color: #999999;
+    text-transform: none;
+}
+      
+.login{
+    border:none;
+    height: 40px;
+    width: 80px;
+    float: right;
+    margin: 10px 10.3% 0 0;
+    font-size: 17px;
+    font-weight: 900;
+    background-color:rgb(252,252,252);
+    color: #999999;
+    
+    
+}
+.login:hover{
+    border: 2px solid #3acfce;
+    cursor: pointer;
+}
+.text{
+    float: left;
+    font-size: 200px;
+    margin:200px 0 0 50px;
+    color: #3acfce;
+}
+
+a{
+    text-decoration: none;
+    color:none;
+    /*text-align: center;*/
+    
+}
+
+.register{
+    border:none;
+    height: 40px;
+    width: 80px;
+    float: right;
+    margin: 10px 10.3% 5px 20px;
+    font-size: 17px;
+    font-weight: 900;
+    background-color:rgb(252,252,252);
+    color: #999999;
+    
+    
+}
+.register:hover{
+    border: 2px solid #3acfce;
+    cursor: pointer;
+}

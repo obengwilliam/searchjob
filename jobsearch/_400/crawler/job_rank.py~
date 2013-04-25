@@ -1,6 +1,13 @@
 def compute_ranks(graph):
+    """
+    The dumping factore depicts that there is an 80% chance that
+    a user will continue on links at each page.
+    """
     d = 0.8 # damping factor
-    numloops = 10
+    '''
+    This iteration helps reduce the initialized pageranks into the actual page ranks
+    '''
+    numloops = 25
     
     ranks = {}
     npages = len(graph)
@@ -23,4 +30,4 @@ def compute_ranks(graph):
 
 
 if __name__=='__main__':
-   compute_ranks({'http://www.google.com':['http:www.google.com/k','http:www.google.com/e']})
+   print compute_ranks({'http://www.google.com':['http:www.google.com/k','http:www.google.com/e']})

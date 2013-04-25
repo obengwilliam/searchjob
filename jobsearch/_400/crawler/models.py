@@ -20,8 +20,8 @@ class Seed(models.Model):
         created_at=models.DateField(auto_now=True)
         max_depth=models.PositiveIntegerField(default=10)
         max_pages=models.PositiveIntegerField(default=10000)
-        submitter=models.TextField(default=User,editable=False)
-      
+        completed=models.BooleanField()
+        details=models.TextField(editable=False)
        
         def __unicode__(self):
               return self.seeds_urls
@@ -46,6 +46,9 @@ class Page_info(models.Model):
        title=models.CharField(max_length=255)
        body=models.TextField()
        url=models.URLField(max_length=1000)
+       doc_digest=models.CharField(max_length=255)
+       rank_score=models.FloatField(null=True)
+
   
        def  __unicode__(self):
             return self.title
@@ -68,7 +71,18 @@ class Stopword(models.Model):
 class Error_log(models.Model):
        error_type=models.TextField(max_length=255)
        date=models.DateTimeField(auto_now_add=True,null=True)
-       from_module=models.CharField(max_length=255)
+       from_module=models.CharField(max_length=255)	
+
+class Web_Statistics(models.Model):
+	removed_urls=models.PositiveIntegerField(null=True)
+	robotstxt_request=models.PositiveIntegerField(null=True)
+	excluded_urls=models.PositiveIntegerField(null=True)
+	Http_Request=models.PositiveIntegerField(null=True)
+	
+	
+
+
+
 
 
 

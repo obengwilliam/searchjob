@@ -1,6 +1,6 @@
 
 
-def add_to_search_index(keyword,url,title,body,location,count):
+def add_to_search_index(keyword,url,title,body,location,count,docdigest):
   '''
     (str(),str(),str(),str(),str(),str())->
   '''  
@@ -14,16 +14,16 @@ def add_to_search_index(keyword,url,title,body,location,count):
         
        
   except:
-        print 'connection problem'
+        print 'connection problem...'
 
   
-        
+        	
 
   
   page_id=''
   
   if  not db.crawler_page_info.find_one({'url':url}):
-      		page=db.crawler_page_info.insert({'title':title,'body':body,'url':url})
+      		page=db.crawler_page_info.insert({'title':title,'body':body,'url':url,'doc_digest':docdigest})
                 page_id=page
   else:
              page_id=db.crawler_page_info.find_one({'url':url})['_id']

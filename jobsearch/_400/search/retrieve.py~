@@ -1,6 +1,7 @@
 from inverted import load_index
 from fullinverted import restructuring_index
 from collections import Counter
+from stemming.porter2 import stem
 
 
 
@@ -42,7 +43,7 @@ def phrasesearch(phrase):
         restructuring_index(finvindex)
         phrasewords=phrase.strip().strip('"').split()
        
-        firstword,otherwords=phrasewords[0],phrasewords[1:]
+        firstword,otherwords=stem(phrasewords[0]),phrasewords[1:]
         found=[]
         found_count=Counter()
         def index(otherword):
@@ -64,11 +65,11 @@ def phrasesearch(phrase):
            
             for firstindex in (ind for t,ind in finvindex[firstword] if t==id):
                
-               if all((id,firstindex+1+otherindex) in index(otherword) for otherindex,otherword in enumerate(otherwords)):
+               if all((id,firstindex+1+otherindex) in index(stem(otherword)) for otherindex,otherword in enumerate(otherwords)):
                     found.append(id)
-        for id in found:
-                found_count[id]+=1
-        return  found_count,found
+        #for id in found:
+        #        found_count[id]+=1
+        return  found
            
             
                  
@@ -80,7 +81,7 @@ if __name__=='__main__':
       
      #pp(termsearch(['check']))
      #empty strings are not allowed at all for phrasesearch
-     pp(termsearch([]))
+     pp(termsearch(['accountant']))
      
 
 

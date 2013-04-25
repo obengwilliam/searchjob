@@ -4,7 +4,10 @@ def compute_ranks(graph):
     a user will continue on links at each page.
     """
     d = 0.8 # damping factor
-    numloops = 10
+    '''
+    This iteration helps reduce the initialized pageranks into the actual page ranks
+    '''
+    numloops = 25
     
     ranks = {}
     npages = len(graph)

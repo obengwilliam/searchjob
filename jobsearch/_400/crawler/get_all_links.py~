@@ -63,6 +63,11 @@ def links(content_soup,url):
 
 
 if __name__=='__main__':
+    import socket
+
+    # timeout in seconds
+    timeout = 10
+    socket.setdefaulttimeout(timeout)
     from bs4 import BeautifulSoup as soup
     from urllib2 import urlopen
     c=urlopen('http://jobs.classifieds1000.com/Ghana/Internet_Jobs/i_would_like_to_be_a_vender')

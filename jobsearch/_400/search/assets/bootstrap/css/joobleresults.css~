@@ -1,5 +1,4 @@
         body {
-          padding-top: 60px;
           padding-bottom: 60px;
           margin: 0px 20px 0px 20px;
           font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
@@ -7,6 +6,8 @@
           line-height: 18px;
           color: #333333;
           background:#E0E0DD;/*url(/static/img/grain1.jpg) no-repeat fixed top right */
+          margin: 0;
+          background-color:lightgray;
         }
         }
         .sidebar-nav {
@@ -16,30 +17,36 @@
         .footerbar{
         }
         
+     
+  
+  
       .joobleheader {
-        position:fixed; 
-        top:0; 
-        left:0; 
-        width:100%; 
-        height:40px; 
-        overflow:auto; 
-        background:black;
-        border-top:4px solid #45776C;
-        }
-  
-  
-      .jooblefooter {
         position: fixed; 
-        bottom:0; 
+        top:15px; 
         left:0;
-        width:100%; 
-        height:30px; 
         overflow:auto; 
         text-align:right; 
-        background:black;
-        border-bottom:5px solid #45776C;
+        width: 1239px;
+         margin: 0 auto;
+         background-color:white;
+         border-bottom: 1px solid #c8c8c8;
+         -webkit-border-radius:4px;
+         box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
+        
   
         }
+
+
+
+#wrapper{
+text-align: left;
+position:relative;
+margin: 0px auto 0px auto;
+top:15px;
+        
+         
+}
+
       .joobleheader .brand {
         display: block;
         float: left;
@@ -120,7 +127,7 @@
       
       body .resultscontainer{
         width: 45.999999%;
-        height: 70%;
+        
         border-radius: 6px;
         margin: 50px 0 20px 120px;
         background:#fafafa;
@@ -146,7 +153,7 @@
       .main-row
       .resulttitle-row{
         width: 85%;
-        height: 20px;
+       
         font-size:20px;
         /*border:1px solid #ccc;*/
         margin: 2px 2px 0 2px;
@@ -182,7 +189,7 @@
       .main-row
       .resulturl-row{
         width: 85%;
-        height: 20px;
+       
         font-size:15px;
         /*border:1px solid #ccc;*/
         margin: 0px 2px 0 2px;

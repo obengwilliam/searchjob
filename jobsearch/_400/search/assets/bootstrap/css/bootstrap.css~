@@ -14,14 +14,22 @@ div
 display:block;
 }
 
+#wrapper1{
+-webkit-border-radius:4px;
+-webkit-box-shadow:0 0 10px rgba(0,0,0,0.5);
+margin:20px auto;
+height:100%;
+width:1239px;
+}
 
 #toppane{
          width: 1239px;
-         height:71px;
+         height:70px;
          margin: 0 auto;
          background-color:white;
          border-bottom: 1px solid #c8c8c8;
-         box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
+         -webkit-border-radius:4px;
+         box-shadow: 0px 5px 5px rgba(0,0,0,0.25);
          
 }
  .wrapper{
@@ -29,7 +37,7 @@ display:block;
 text-align: left;
 position:relative;
 margin: 0px auto 0px auto;
-padding:25px;
+top:15px;
 
 
 }
@@ -37,16 +45,25 @@ padding:25px;
 .formdiv
 {
 float:right;
-padding-top:300px;
+padding-top:200px;
 padding-right:50px;
 width:1000px;
 }
 
-p{
-font-size:2em;
+#middlepane h1{
+font-size:2.5em;
 display:inline;
 text-align: right;
 padding-bottom:25px;
+padding-right:25px;
+padding-top:10px;
+float:right;
+color:#ffffff;
+margin-top:10px;
+
+font-family:Helvetica, arial, sans-serif;
+
+
 }
 
 
@@ -60,11 +77,12 @@ float:none;
 #middlepane{
 position:relative;
 width:1239px;
-height:500px;
+height:460px;
 border-bottom: 1px solid #c8c8c8;
 box-shadow: 0px 0px 5px rgba(0,0,0,0.25);
-background:url('../img/slide.jpg') top left no-repeat;
+background:url('../img/slide.jpg') top left repeat;
 margin:0 auto;
+-webkit-border-radius:4px;
 }
 
 .midwrapper{
@@ -74,13 +92,20 @@ float:none;
 #bottom
 {
          width: 1239px;
-         height:71px;
+         height:75px;
 
          margin: 0 auto;
          background-color:white;
          border-bottom: 1px solid #c8c8c8;
          box-shadow: 0px 5px 0px rgba(0,0,0,0.25);
+         -webkit-border-radius:4px;
          
+         
+}
+
+center
+{
+
 }
 
 input[type="search"]{
@@ -94,15 +119,24 @@ box-shadow: 0px 1px 1px #000;
 outline: none;
 font: 4em;
 padding:15px;
+background-color:transparent;
+color:white;
+
 }
 
 h1 a
 {
-margin-left: 55px;
+margin-left: 50px;
 font-family: Helvetica, arial, sans-serif;
 
 font-size:1.5em;
-text-shadow:0px 0px 2px #189cad;
+text-shadow:0px 0px 1px #189cad;
+
+}
+img{
+display:inline-block;
+background-color:#189cad;
+margin-right:10px;
 }
 
 
@@ -117,8 +151,8 @@ text-shadow:0px 0px 2px #189cad;
   text-align: center;
   
   font-size: 1.7em;
-  background: url('../images/noise.png'), -moz-linear-gradient(top, #3acfce 0%, #189cad 100%);
-  background: url('../images/noise.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3acfce), color-stop(100%, #189cad));
+  background: url('../img/noise.png'), -moz-linear-gradient(top, #3acfce 0%, #189cad 100%);
+  background: url('../img/noise.png'), -webkit-gradient(linear, left top, left bottom, color-stop(0%, #3acfce), color-stop(100%, #189cad));
   background-color: #189cad;
   color: #FFF;
   padding: 15px;
@@ -306,7 +340,8 @@ body {
   font-size: 13px;
   line-height: 18px;
   color: #333333;
-  background-color: #5b5b5b;
+  #background-color: #5b5b5b;
+   background-color:lightgray;
 }
 
 a {
@@ -597,7 +632,6 @@ h6 small {
 
 h1 {
   font-size: 30px;
-  line-height: 36px;
 }
 
 h1 small {
@@ -925,9 +959,9 @@ input[type="tel"],
 input[type="color"],
 .uneditable-input {
   display: inline-block;
-  font-size: 13px;
+  font-size: 20px;
   line-height: 18px;
-  color: #555555;
+  
 }
 
 input,
@@ -955,7 +989,7 @@ input[type="search"],
 input[type="tel"],
 input[type="color"],
 .uneditable-input {
-  background-color: #ffffff;
+  background-color: #transparent;
   border: 1px solid #cccccc;
   -webkit-border-radius: 3px;
      -moz-border-radius: 3px;
@@ -1366,15 +1400,15 @@ select:focus:required:invalid:focus {
 }
 
 :-moz-placeholder {
-  color: #999999;
+  color: white;
 }
 
 :-ms-input-placeholder {
-  color: #999999;
+  color: white;
 }
 
 ::-webkit-input-placeholder {
-  color: #999999;
+  color: white;
 }
 
 .help-block,

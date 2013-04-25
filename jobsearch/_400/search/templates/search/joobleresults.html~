@@ -1,78 +1,129 @@
+{% extends "base.html" %}
 
-{% extends "base.html"%}
+{% block content %}
+<script src="/static/bootstrap/js/jquery.js" ></script>
+<script>
+$('document').ready(
+function ()
+{       $('#searchform').submit(
+        function(){
+                    $('#loading_image').show();
+                    return true;
+                    }
 
-{% block css %}<link rel="stylesheet" href="/static/bootstrap/css/joobleresults.css" media='screen'>{% endblock css%}
 
-{% block content%}
-        <body onload="makeactive();">
-            <!-- begin HEADER and FOOTER -->
-            <div id="" class="joobleheader"><!-- start header -->
-                <div id="" class="brand">
-                    <a href="#">Jooble</a>
-                </div>
-                <div class="putright">
-                    some user info
-                </div>
-            </div><!-- end header-->
-            <div id="id" class="jooblefooter" onload="test();"><!-- start footer-->
-                
-            </div><!-- end footer -->
-            <!-- end HEADER and FOOTER -->
-            
-            <!-- START BODY -->
-            <div class="jooblesearchform">
-                <div class="container">
-                    <div class="searchform">
-                        <form action="#Action" method="get" name="joobleseachform">
-                            <input type="text" class="textinput" id="textinput" name="joobletextinput"
-                                   onclick="removeborder()" onkeypress="removeborder()" onmousemove="removeborder()" placeholder="Jooble Search"/>
-                        </form>
-                    </div><!--end searchform-->
-                    
-                </div><!--end container-->
-                
-            </div><!--end joobleseachform-->
-            
-            <div class="resultscontainer">
-       
-                <div class="main-row">
-                    <div class="resulttitle-row">
-                        <a href="#some url">Jooble The Best Job Search</a>                   
-                    </div>
-                    <div class="resulturl-row">
-                        <p>jooobl.com/aboutjooble</p>
-                    </div>
-                    <div class="resultcontent-row">
-                        <p>Jooble is the best Search engine in ghana ,it was made in 2045 by PaoPao and CaoCao at the university of ghana
-                        So come and go
-                        </p>
-                    </div>
-                   
-                    
-                    
-                  
-       
-                 </div>
-                
+				);
+	
         
-            <!-- END BODY -->
-
-        </body>
-        <script type='javascript'>
-        function makeactive() {
-     return document.forms['joobleseachform'].elements['joobletextinput'].focus();
-       
 }
 
-function removeborder(){
-  
-          document.getElementById("textinput").style.outline="white";
-          //document.getElementById("line").innerHTML="<hr>";
-          
-        
-        }
+)
+</script>
 
-        </script>
-{% endblock content%}
-        
-    </html>
+<body>
+<div id='wrapper1'>
+ 
+     <div id='toppane'>
+     <div class='wrapper'>
+          
+          <h1><a href='/search'>Jooble</a> 
+
+
+
+
+
+
+
+</h1>
+          <div style='float:right'><a>About Us</a>    &nbsp&nbsp&nbsp <a>Sign Up&nbsp&nbsp&nbsp</a>
+                <a href="https://twitter.com/jooble" target="_blank"><img src="/static/bootstrap/img/twitter.png" style="width: 30px;"title="twitter" alt="twitter page"></a>
+          <a href="https://facebook.com/jooble" title='facebook' target="_blank"><img src="/static/bootstrap/img/facebook.png" style="width: 30px;" alt="twitter page"></a>
+          </div>
+           <div>
+           
+</div>
+          <!--<h1><a href='/'>Jooble</a></h1> -->
+     </div>
+     </div>
+
+
+  <div class="jooblesearchform">
+                <div class="container">
+
+                    <div class="searchform">
+                        <form action="/search/jobtitle" method="get">
+                            <input type="text"  value='{{value}}' name='job'/>
+                           <button>a </button>
+                        </form>
+                    </div>
+
+
+                    
+                </div>
+                
+            </div>
+
+    
+ <div class="resultscontainer">
+       
+                <div class="main-row">
+
+
+
+
+                   {% for results in  final_results %}
+                   
+                        <div> <p>{{ results.title}}</p> </div>                  
+                  
+                   
+                         <div><a href={{results.url}}>{{results.url}}</a></div>
+                    
+                  
+                    
+                        <div><p>{{results.body}}</p>
+                    {% endfor %}
+                    </div>
+           </div>
+           </div> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ 
+<div id='bottom'> 
+ <center><small>© 2013 Jooble ... All Rights Reserved.</small>&nbsp&nbsp&nbsp<a>About</a> &nbsp&nbsp&nbsp<a>Blog</a>  &nbsp&nbsp&nbsp<a>Press &nbsp&nbsp&nbsp</a> <a>Contact &nbsp&nbsp&nbsp</a></center>
+</div>
+
+
+    
+</div>
+</body>
+<script type="text/javascript">
+var search_input = document.getElementById('submit_button');
+search_input.addEventListener('click', function(){ window.location.href="/static/assets/bootstrap/img/ajax-loader.gif"}, false);
+
+
+
+</script>
+
+
+{% endblock content %}

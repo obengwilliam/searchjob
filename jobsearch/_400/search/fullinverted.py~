@@ -1,7 +1,7 @@
 from pymongo import MongoClient
 
                    
-def restructuring_index(fivindex):
+def restructuring_index(finvindex):
      '''
 	dict()->dict()
 	This full index module contains a keyword and a list of documents where the the keyword appears
@@ -24,4 +24,15 @@ def restructuring_index(fivindex):
      for index in db.crawler_index.find():
           finvindex[index['keyword']]=set()
           [finvindex[index['keyword']].add((doc['id'],location)) for doc in index['doc'] for location in doc['location']]
-     return True
+     return finvindex
+
+
+if __name__=='__main__':
+   import profile
+   print profile.run('restructuring_index({})')
+
+
+
+
+
+

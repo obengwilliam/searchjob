@@ -6,6 +6,16 @@ from retrieve import termsearch,phrasesearch
 from check_retrieve import ch_re as checks
 import re
 from stemming.porter2 import stem 
+from pymongo import MongoClient
+from django.template import Context
+from operator import itemgetter
+
+try: 
+	connection=MongoClient()
+	db=connection.jobsdbs
+except:
+       print 'connection problem problem'
+
 
 
 
@@ -14,12 +24,23 @@ def search(request):
 
 def response(request):
      jobtitle=request.GET.get('job','')
-     if re.match('"',jobtitle):
-        #we begin phrasesearch here
+     if re.match('"',jobtitle) and len(jobtitle.split()) > 1:
+        jobtitle=' '.join(list(stem(i.lower()) for i in jobtitle.split()))
+        result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in  phrasesearch(jobtitle.lower()))
+        results=sorted(result_unsorted, key=itemgetter('rank_score'))
+        
+            
+        context=Context({'final_results':results,'value':jobtitle})
+        
+        return render_to_response('search/joobleresults.html',context)
 
-        print 'happy now'
+        
      else:
-         print termsearch([stem(i)for i in checks(str(jobtitle).split(' '))])
+          result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in list(termsearch([stem(i.lower())for i in checks(str(jobtitle).split(' '))])))
+          results=sorted(result_unsorted, key=itemgetter('rank_score'))
+          
+          context=Context({'final_results':results,'value':jobtitle})
+          return render_to_response('search/joobleresults.html',context)
          
      
     
@@ -33,6 +54,7 @@ def response(request):
      
      
      return render_to_response('search/joobleresults.html')
+
 
 
 def query_operation(keyword):

@@ -1,0 +1,59 @@
+body {
+    padding-top: 60px;
+    padding-bottom: 60px;
+    margin: 0px 20px 0px 20px;
+    font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+    font-size: 13px;
+    line-height: 18px;
+    color: #333333;
+    /*background:#E0E0DD;/*url(/static/img/grain1.jpg) no-repeat fixed top right */
+    }
+    
+    
+.container{
+    margin:50px auto;
+    border: 1px solid rgba(176,176,176,1);
+    height: 50%;
+    width: 50%;
+    background: rgba(176,176,176,0.5);
+}
+.container:hover{
+    border: 2px solid #3acfce;
+}
+
+.inner-container{
+    padding: 80px;
+    margin-left: 30px;
+    
+    
+}
+
+h2{
+    color: #3acfce;
+    font-size: 30px;
+}
+
+a{
+    text-decoration: none;
+    color:none;
+    /*text-align: center;*/
+    
+}
+
+.submit{
+    border:none;
+    height: 40px;
+    width: 80px;
+    float: right;
+    margin: 10px 95px 0 0;
+    font-size: 17px;
+    font-weight: 900;
+    background-color:rgb(252,252,252);
+    color: #999999;
+    
+    
+}
+.submit:hover{
+    border: 2px solid #3acfce;
+    cursor: pointer;
+}

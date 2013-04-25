@@ -15,10 +15,10 @@ def stopword(stopword_list):
                 print 'connection problem'
 	try:
 	        
-		for i in db.crawler_stopword.find():
-                     stopword.append(i['words'])
+		stopword_list=(['words'] for i in db.crawler_stopword.find())
+                 
                
-         	return stopwords
+         	return stopword_list
         except:
                print 'problem with calling from database'
 		

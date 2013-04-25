@@ -1,13 +1,39 @@
 {% extends "base.html" %}
 
 {% block content %}
+<script src="/static/bootstrap/js/jquery.js" ></script>
+<script>
+$('document').ready(
+function ()
+{       $('#searchform').submit(
+        function(){
+                    $('#loading_image').show();
+                    return true;
+                    }
+
+
+				);
+	
+        
+}
+
+)
+</script>
 
 <body>
+<div id='wrapper1'>
  
      <div id='toppane'>
      <div class='wrapper'>
-          <h1><a href='/'>Jooble</a> </h1>
-          <span style='float:right'>About Us    &nbsp&nbsp&nbsp Sign Up </span>
+          
+          <h1><a href='/search'>Jooble</a> </h1>
+          <div style='float:right'><a>About Us</a>    &nbsp&nbsp&nbsp <a>Sign Up&nbsp&nbsp&nbsp</a>
+                <a href="https://twitter.com/jooble" target="_blank"><img src="/static/bootstrap/img/twitter.png" style="width: 30px;"title="twitter" alt="twitter page"></a>
+          <a href="https://facebook.com/jooble" title='facebook' target="_blank"><img src="/static/bootstrap/img/facebook.png" style="width: 30px;" alt="twitter page"></a>
+          </div>
+           <div>
+           
+</div>
           <!--<h1><a href='/'>Jooble</a></h1> -->
      </div>
      
@@ -17,15 +43,16 @@
                      <!--
                      <div class='search'>
                      </div>-->
-                    
-                
+                              
+                               <h1>Jooble . Ghana's best job Index </h1>
                      
                              <div class='formdiv' '>
-                                   <p>At jooble We give you the best job index in Ghana</p>
-                                   <form method="get"  action="/search/jobtitle">
-                                   <input type="search" name='job' placeholder="Enter job title here" autofocus/>
+                                 
+                                   <form method="get"  action="/search/jobtitle" id='searchform'>
+                                   <input type="search" spellcheck="true" name='job' placeholder="Enter Job Title Here" id='search' autofocus/>
                                    <button type="submit" id="submit_button" >Search</button>
                                    </form>
+                                   <center><img src="/static/bootstrap/img/ajax-loader.gif" style="display: none; float:left;" id="loading_image"></center>
                               </div>
                                
 
@@ -33,15 +60,26 @@
                       
      </div>
  
-
 <div id='bottom'> 
+ <center><small>© 2013 Jooble ... All Rights Reserved.</small>&nbsp&nbsp&nbsp<a>About</a> &nbsp&nbsp&nbsp<a>Blog</a>  &nbsp&nbsp&nbsp<a>Press &nbsp&nbsp&nbsp</a> <a>Contact &nbsp&nbsp&nbsp</a></center>
 </div>
+<!--
+<div id='bot'> 
+ 
+</div>
+-->
 
 
     
-
+</div>
 </body>
+<script type="text/javascript">
+var search_input = document.getElementById('submit_button');
+search_input.addEventListener('click', function(){ window.location.href="/static/assets/bootstrap/img/ajax-loader.gif"}, false);
 
+
+
+</script>
 
 
 {% endblock content %}

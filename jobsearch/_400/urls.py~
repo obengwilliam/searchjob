@@ -6,7 +6,10 @@ from django.contrib import admin
 from search.views import search
 from search.views import response
 from search.views import socialmedia
-admin.autodiscover()
+
+
+
+
 
 urlpatterns = patterns('',
     # Examples:

@@ -19,7 +19,27 @@ from union import add_to_tocrawl
 from indexpg import make_index
 from page_info import get_page_data as info
 from job_rank import compute_ranks  as ranks
-import thread
+
+
+from document_seen_test import content_seen_test as test_doc
+
+
+
+
+try:
+        from pymongo import MongoClient
+        
+        connection=MongoClient()
+       
+except:
+        print 'connection problem'
+db=connection.jobsdbs
+
+
+
+
+
+
 
 def crawl_web(seed,mx_pg,mx_dp,filter_list=None):
     
@@ -31,7 +51,7 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list=None):
     
     while tocrawl:
         
-        page_url ,depth= tocrawl.pop(0)
+        page_url ,depth= tocrawl.pop(0);#here we will count the number of document removed from the frontier
         '''
         if page_url in filter_list:
            print 'CAN NOT BE CRAWLED.......filtered....%s'%page_url
@@ -45,9 +65,11 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list=None):
             '''
             This module is responsible for obtaining all page info
             '''
-            
-            make_index(page_url, content_soup)
-            outlinks=all_links(content_soup,base_robot_parsed_url)
+            if not test_doc(content_soup):
+            	make_index(page_url, content_soup)
+            	outlinks=all_links(content_soup,base_robot_parsed_url)
+            else:
+	         pass #here will count the number of document where duplicate existed
             '''
             Below am trying to obtain the relation between the page_url and it links. This 
             pairs form a graph to be used in our importance score calculation
@@ -58,7 +80,7 @@ def crawl_web(seed,mx_pg,mx_dp,filter_list=None):
             
             print '++++++++++++++++++++++++++++++++++++++++++++++++++++++++++'
             #yet to check for urls that contains urls that linked to the same pages
-        print 'This is the number of pages crawled'+' '+str(len(crawled))
+            print 'This is the number of pages crawled'+' '+str(len(crawled))
     return graph
 
 
@@ -76,18 +98,13 @@ def main(ranks={}):
     >>>main()
     ['http://www.jobsinghana.com','http://www.jobsin.com'....]
     '''
-    try:
-        from pymongo import MongoClient
-        
-        connection=MongoClient()
-       
-    except:
-        print 'connection problem'
-    db=connection.jobsdbs
+   
     
     if ranks:
        assert db.connection==connection
-       #db.crawler_ranks.insert(ranks)
+       
+       for i in ranks:
+            db.crawler_page_info.update({"url":i},{"$set":{"rank_score":ranks[i]}},safe=True)
        return True
     else:
     	seed_urls=db.crawler_seed.find()
@@ -111,25 +128,21 @@ def main(ranks={}):
 
 
 
-
-
-
-
-if __name__=='__main__':
-	try:
+def start_crawler():
+    try:
 	      seed_list=main()
 	      while len(seed_list)!=0:
 	            seed=seed_list.pop();
                      
 	            graph=crawl_web(seed['url'],seed['max_pages'],seed['max_depth'])
-	            print ranks(graph)
+	            main(ranks(graph))
 	            #main()
 	            '''
 	            Now we insert the ranks of our graph into our mongodb 
 	            '''
             
             
-	except:
+    except:
                print 'error'
                import sys
                from pymongo import MongoClient
@@ -137,4 +150,12 @@ if __name__=='__main__':
                db=connection.jobsdbs
                db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
                
+    
+
+
+
+
+if __name__=='__main__':
+            start_crawler();
+	
    

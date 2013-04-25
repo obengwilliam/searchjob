@@ -1,14 +1,17 @@
 def url_filter(urlf):
-   
-        from pymongo import MongoClient
-        connection=MongoClient()
-        db=connection.jobsdbs
-        assert db.connection==connection
+	try:   
+        	from pymongo import MongoClient
+        	connection=MongoClient()
+        	db=connection.jobsdbs
+        	assert db.connection==connection
 	
        
       
-	if[url for url in db.crawler_filterurl.find() if url['filter_url']==urlf]:
-           return True
+		if db.crawler_filterurl.find_one({'filter_url':urlf}):
+           		return True
+                
+	except:
+               print 'problem in trying to filter'
 
     
            
