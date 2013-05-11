@@ -11,8 +11,8 @@ It also makes sure that it does not duplicate the urls
         '''
 	try:
 		for url in outlinks:
-			if (url not in to_crawl) and (not filter(url)) and (not test(url)):
-				to_crawl.append([url,depth+1])
+			if (url not in list(to_crawl.queue)) and (not filter(url)) and (not test(url)):
+				to_crawl.put([url,depth+1])
 		
 	except:
 		print 'problem from union.add_tocrawl :check link'

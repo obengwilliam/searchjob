@@ -1,3 +1,6 @@
+from bs4 import BeautifulSoup as soup
+import sys
+
 def content_seen_test(page):
 	'''
 	This document is responsible for performing a document seen test
@@ -11,18 +14,23 @@ def content_seen_test(page):
 		from hashlib import sha224
 
 
- 		connectin=MongoClient()
+ 		connection=MongoClient()
 		db=connection.jobsdbs
 		
 		assert db.connection==connection
 
-
-		if db.crawler_page_info.find_one({'doc_digest':sha224(str(page)).hexdigest()}):
+                if page==soup('','lxml'):
+			return False
+			
+		if db.crawler_page_info.find_one({'doc_digest':sha224(page.body.encode('utf-8')).hexdigest()}):
 			return True
-                else:
+                else: 
 			return False
 	except:
-		'problem with document'
+                import sys
+		db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
+		print 'problem with document finger printing algorithm'
+
 		return False
 
 

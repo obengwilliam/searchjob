@@ -1,0 +1,36 @@
+
+<!DOCTYPE html><html xmlns:fb="http://ogp.me/ns/fb#" itemtype="http://schema.org"><head><meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=IE7"><meta name="fragment" content="!"><meta charset="utf-8"><meta property="og:title" content="Coursera"><meta property="og:type" content="website"><meta property="og:image" content="http://s3.amazonaws.com/coursera/media/AllBooks.png"><meta property="og:url" content="https://www.coursera.org/"><meta property="og:site_name" content="Coursera"><meta property="og:locale" content="en_US"><meta property="og:description" content="We are a social entrepreneurship company that partners with the top universities in the world to offer courses online for anyone to take, for free. We envision a future where the top universities are educating not only thousands of students, but millions. Our technology enables the best professors to teach tens or hundreds of thousands of students."><meta property="fb:admins" content="727836538,4807654"><meta property="fb:app_id" content="274998519252278"><meta itemprop="name" content="Coursera"><meta itemprop="description" content="Coursera | Education for Everyone"><meta itemprop="image" content="http://s3.amazonaws.com/coursera/media/AllBooks.png"><title>Coursera.org</title><link href="https://d2wvvaown1ul17.cloudfront.net/site-static/320957efeac3263e0d6a7b2199399d47e00dabc7/css/www.css" rel="stylesheet" type="text/css"></head><body><div id="fb-root"></div><div id="origami"><div style="position:absolute;top:0px;left:0px;width:100%;height:100%;background:#f5f5f5;padding-top:5%;"><div><span id="coursera-loading-js" style="display: none; padding-left:45%">loading &nbsp;&nbsp;<img src="https://d2wvvaown1ul17.cloudfront.net/site-static/images/icons/loading.gif"></span></div><noscript><div id="coursera-loading-nojs" style="text-align:center; margin-bottom:10px;">Please use a <a href="/browsers">modern browser </a> with JavaScript enabled to use Coursera.</div></noscript></div></div><!--[if gte IE 8]><script>document.getElementById("coursera-loading-js").style.display = 'block';</script><![endif]-->
+<!--[if !IE]> --><script>document.getElementById("coursera-loading-js").style.display = 'block';</script><!-- <![endif]--><script type="text/javascript" src="https://d2wvvaown1ul17.cloudfront.net/site-static/320957efeac3263e0d6a7b2199399d47e00dabc7/js/core/require.js"></script><script type="text/javascript" data-baseurl="https://d2wvvaown1ul17.cloudfront.net/site-static/320957efeac3263e0d6a7b2199399d47e00dabc7/" data-version="320957efeac3263e0d6a7b2199399d47e00dabc7" data-timestamp='1366967533163' data-debug='0' id="_require">if(document.getElementById("coursera-loading-js").style.display == 'block') {
+  (function(el) {
+     // prevent throw
+     require.onError = function(err) { 
+       window._204 = window._204 || []; 
+       window._204.push({key: 'requireErr', value: err});
+     };
+     
+     require.config({
+       enforceDefine: true,
+       waitSeconds: 14,
+       baseUrl: el.getAttribute("data-baseurl"),
+       urlArgs: el.getAttribute("data-debug") == "1" ? "v=" + el.getAttribute("data-timestamp") : "",
+       shim: {
+          "underscore": {
+             exports: '_'
+          },
+          
+          "backbone": {
+             deps: ['underscore', 'jquery'],
+             exports: 'Backbone'
+          }
+       },
+       paths: {
+          "jquery":       "js/core/jquery",
+          "underscore":   "js/core/underscore",
+          "backbone":     "js/core/backbone"
+       },
+       callback: function() {
+         require(["js/routes/home"]); // bootup coursera
+       }
+     });
+  })(document.getElementById("_require"));
+}</script></body></html>

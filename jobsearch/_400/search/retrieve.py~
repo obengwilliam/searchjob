@@ -81,7 +81,7 @@ if __name__=='__main__':
       
      #pp(termsearch(['check']))
      #empty strings are not allowed at all for phrasesearch
-     pp(termsearch(['accountant']))
+     pp(termsearch(['administrator']))
      
 
 

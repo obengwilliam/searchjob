@@ -20,84 +20,77 @@ function ()
 )
 </script>
 
-<body>
+<body id='results_body '>
 <div id='wrapper1'>
  
-     <div id='toppane'>
+     <div id='toppane' style="line-height:22px;">
      <div class='wrapper'>
           
-          <h1><a href='/search'>Jooble</a> 
-
-
-
-
-
-
-
-</h1>
-          <div style='float:right'><a>About Us</a>    &nbsp&nbsp&nbsp <a>Sign Up&nbsp&nbsp&nbsp</a>
-                <a href="https://twitter.com/jooble" target="_blank"><img src="/static/bootstrap/img/twitter.png" style="width: 30px;"title="twitter" alt="twitter page"></a>
-          <a href="https://facebook.com/jooble" title='facebook' target="_blank"><img src="/static/bootstrap/img/facebook.png" style="width: 30px;" alt="twitter page"></a>
-          </div>
+          <h1><a href='/search' style="float:left; margin:2px 19px;">Jooble</a></h1>
+           <div class="searchform" style="">
+                        <form action="/search/jobtitle" method="get" >
+                            <input type="text"  value='{{value}}' name='job' autofocus autocomplete="false" id="search_form"/>
+                           <button id="results_button"> Search</button>
+                        </form>
+                    </div>
            <div>
            
 </div>
           <!--<h1><a href='/'>Jooble</a></h1> -->
      </div>
+     
      </div>
 
-
- 
-
-    
- <div class="resultscontainer">
-       
-                <div class="main-row">
-
-
-
-
-                   {% for results in  final_results %}
-                   
-                        <div> <p>{{ results.title}}</p> </div>                  
-                  
-                   
-                         <div><a href={{results.url}}>{{results.url}}</a></div>
+  
+               <div class="resulttitle-row" style="background-color:#fafafa;">
+               <div style="margin:0px 0 3px 120px; width:670px; padding: 60px 40px 30px 10px;">
+		{% if length == 0 %}
+                        <h1 style="height:200px; padding-top:22px;">Sorry...No results found</h1>
+                      
+		{% else %}
+			  <span > <h6>About &nbsp{{length}} &nbsp results</h6></span>
+                         
+                          {% for results in final_results.object_list %} 
+	               
+                       
+        
+                        <a href="{{results.url}}" style="font-size:15px; text-decoration:underline; line-height:4px;">{{results.title}}</a><br/>
+			 <strong>{{results.url}}</strong> </br>
+                        <small>{{results.body|truncatewords:"20"}}
+</small></br></br>
+                      
+                       
+                      {% endfor %}
+                      
+                     
+		{% endif %}                
                     
-                  
-                    
-                        <div><p>{{results.body}}</p>
-                    {% endfor %}
-                    </div>
-           </div>
-           </div> 
 
 
 
 
 
 
+                   
 
 
 
+                 </div>
+                 </div>
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+             
+                              
+                      
+     
  
 <div id='bottom'> 
  <center><small>© 2013 Jooble ... All Rights Reserved.</small>&nbsp&nbsp&nbsp<a>About</a> &nbsp&nbsp&nbsp<a>Blog</a>  &nbsp&nbsp&nbsp<a>Press &nbsp&nbsp&nbsp</a> <a>Contact &nbsp&nbsp&nbsp</a></center>
 </div>
+<!--
+<div id='bot'> 
+ 
+</div>
+-->
 
 
     

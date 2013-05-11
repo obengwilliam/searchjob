@@ -1,0 +1,77 @@
+
+<!DOCTYPE html>
+<html i18n-values="
+    dir:textdirection;
+    hasattribution:hasattribution;
+    themegravity:themegravity;
+    bookmarkbarattached:bookmarkbarattached;"
+  class="starting-up">
+<head>
+<meta charset="utf-8">
+<title i18n-content="title"></title>
+<!-- Don't scale the viewport in either portrait or landscape mode.
+     Note that this means apps will be reflowed when rotated (like iPad).
+     If we wanted to maintain position we could remove 'maximum-scale' so
+     that we'd zoom out in portrait mode, but then there would be a bunch
+     of unusable space at the bottom.
+-->
+<meta name="viewport"
+      content="user-scalable=no, width=device-width, maximum-scale=1.0">
+
+<!-- It's important that this be the first script loaded. -->
+<script>// Copyright (c) 2012 The Chromium Authors. All rights reserved.
+// Use of this source code is governed by a BSD-style license that can be
+// found in the LICENSE file.
+
+/**
+ * @fileoverview
+ * Logging info for benchmarking purposes. Should be the first js file included.
+ */
+
+/* Stack of events that has been logged. */
+var eventLog = [];
+
+/**
+ * Logs an event.
+ * @param {String} name The name of the event (can be any string).
+ * @param {boolean} shouldLogTime If true, the event is used for benchmarking
+ *     and the time is logged. Otherwise, just push the event on the event
+ *     stack.
+ */
+function logEvent(name, shouldLogTime) {
+  if (shouldLogTime)
+    chrome.send('metricsHandler:logEventTime', [name]);
+  eventLog.push([name, Date.now()]);
+}
+
+logEvent('Tab.NewTabScriptStart', true);
+window.addEventListener('load', function(e) {
+  logEvent('Tab.NewTabOnload', true);
+});
+document.addEventListener('DOMContentLoaded', function(e) {
+  logEvent('Tab.NewTabDOMContentLoaded', true);
+});
+</script>
+
+<style>/* Copyright (c) 2012 The Chromium Authors. All rights reserved.
+ * Use of this source code is governed by a BSD-style license that can be
+ * found in the LICENSE file. */
+
+.bubble {
+  position: absolute;
+  white-space: normal;
+  /* Height is dynamic, width fixed. */
+  width: 300px;
+  z-index: 9999;
+}
+
+.bubble-content {
+  color: black;
+  left: 1px;
+  line-height: 150%;
+  padding: 8px 11px 12px;
+  position: relative;
+  right: 1px;
+  top: 1px;
+  width: 298px;
+

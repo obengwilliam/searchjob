@@ -3,8 +3,7 @@
 DEBUG = True
 TEMPLATE_DEBUG = DEBUG
 import os
-SITE_ROOT1 =os.path.join(os.path.dirname(os.path.realpath(__file__)),'search')
-SITE_ROOT1 =os.path.join(os.path.dirname(os.path.realpath(__file__)),'crawler')
+SITE_ROOT =os.path.join(os.path.dirname(os.path.realpath(__file__)),'search')
 
 ADMINS = (
     # ('Your Name', 'your_email@example.com'),
@@ -30,6 +29,17 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
+
+
+
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
 TIME_ZONE = 'Africa/Accra'
 
 # Language code for this installation. All choices can be found here:
@@ -73,7 +83,7 @@ ADMIN_MEDIA_PREFIX = '/static/admin/'
 # Additional locations of static files
 
 STATICFILES_DIRS = (
-    os.path.join(SITE_ROOT1,'assets'),
+    os.path.join(SITE_ROOT,'assets'),
     # Put strings here, like "/home/html/static" or "C:/www/django/static".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
@@ -111,7 +121,7 @@ TEMPLATE_DIRS = (
     # Put strings here, like "/home/html/django_templates" or "C:/www/django/templates".
     # Always use forward slashes, even on Windows.
     # Don't forget to use absolute paths, not relative paths.
-    os.path.join(SITE_ROOT1,'templates'),
+    os.path.join(SITE_ROOT,'templates'),
 )
 
 CRON_POLLING_FREQUENCY = 3
@@ -123,12 +133,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'django.contrib.admin',
     'djangotoolbox',
     'django_mongodb_engine',
     'crawler',
     'search',
+   
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

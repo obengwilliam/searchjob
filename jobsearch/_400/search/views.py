@@ -1,5 +1,5 @@
 # Create your views here.
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.shortcuts import render_to_response
 from crawler.models import Stopword
 from retrieve import termsearch,phrasesearch
@@ -9,6 +9,11 @@ from stemming.porter2 import stem
 from pymongo import MongoClient
 from django.template import Context
 from operator import itemgetter
+import traceback
+import sys
+from django.core.paginator import Paginator,InvalidPage ,EmptyPage
+from crawler.start_crawler import start_crawler as crawls
+
 
 try: 
 	connection=MongoClient()
@@ -22,28 +27,62 @@ except:
 def search(request):
     return render_to_response('search/index.html')
 
+def crawl(request):
+    crawls()
+    return HttpResponseRedirect('http://localhost:8000/admin/')
+
 def response(request):
+   
      jobtitle=request.GET.get('job','')
-     if re.match('"',jobtitle) and len(jobtitle.split()) > 1:
-        jobtitle=' '.join(list(stem(i.lower()) for i in jobtitle.split()))
-        result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in  phrasesearch(jobtitle.lower()))
-        results=sorted(result_unsorted, key=itemgetter('rank_score'))
-        
-            
-        context=Context({'final_results':results,'value':jobtitle})
+     
+     if re.match('"',jobtitle) and len(jobtitle.strip().strip('"').split()) > 1:
+        print 1
+        jobtitles=' '.join(list(stem(i.lower().strip()) for i in jobtitle.split()))
+        result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in  phrasesearch(jobtitles))
+        result=sorted(result_unsorted, key=itemgetter('rank_score'))
+        results= jooblepaginator(request,result,10)
+       
+        context=Context({'final_results':results,'value':jobtitle,'length':len(result)})
+	
         
         return render_to_response('search/joobleresults.html',context)
 
         
      else:
-          result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in list(termsearch([stem(i.lower())for i in checks(str(jobtitle).split(' '))])))
-          results=sorted(result_unsorted, key=itemgetter('rank_score'))
+
+      try:
           
-          context=Context({'final_results':results,'value':jobtitle})
+         
+          try:result_unsorted=list(db.crawler_page_info.find_one({'_id': i}) for i in list(termsearch([stem(i.lower())for i in str(jobtitle).strip('"').strip(' ').split(' ')])))
+          except: print traceback.print_exc()
+          
+          result=sorted(result_unsorted, key=itemgetter('rank_score'))
+          results= jooblepaginator(request,result,10)
+          context=Context({'final_results':results,'value':jobtitle,'length':len(result)})
+          return render_to_response('search/joobleresults.html',context)
+      except:
+          db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
+          print 'Error from search...views',traceback.print_exc()
+          context=Context({'final_results':[],'value':' ','length':len([])})
           return render_to_response('search/joobleresults.html',context)
          
      
-    
+
+def jooblepaginator(request,querylist,resultsperPage):
+    paginator = Paginator(querylist,resultsperPage)
+    page_range = paginator.page_range
+    try:
+        page = int(request.GET.get("page",1))
+    except ValueError:
+        page = 1        
+    try:
+        querylist = paginator.page(page)
+        
+    except InvalidPage, EmptyPage:
+        
+        querylist = paginator.page(paginator.num_pages)
+        print "there was and InvalidPage or Emptypage error"
+    return querylist 
      
     
      
@@ -53,7 +92,7 @@ def response(request):
 
      
      
-     return render_to_response('search/joobleresults.html')
+    #return render_to_response('search/joobleresults.html')
 
 
 

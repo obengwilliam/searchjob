@@ -2,7 +2,7 @@ from inverted import load_index
 from fullinverted import restructuring_index
 from collections import Counter
 from stemming.porter2 import stem
-
+import sys
 
 
 
@@ -81,7 +81,7 @@ if __name__=='__main__':
       
      #pp(termsearch(['check']))
      #empty strings are not allowed at all for phrasesearch
-     pp(termsearch(['accountant']))
+     pp(termsearch(['administrator']))
      
 
 

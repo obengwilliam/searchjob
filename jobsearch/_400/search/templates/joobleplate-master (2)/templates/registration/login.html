@@ -1,0 +1,38 @@
+<!DOCTYPE="html">
+    <html>
+        <head>
+            <link rel="stylesheet" type="text/css" href="/static/css/login.css" />
+            
+            <script type="text/javascript">
+            document.getElementById('id_username').focus()
+            </script>
+        </head>
+        <body>
+
+{% if error_message %}
+<p class="errornote">{{ error_message }}</p>
+{% endif %}
+  <div class="container">
+    
+                <div class="form-row">
+                    <a href="/joobleaccounts/register/"><input type=button class="register" value="register"/></a>
+                    <form  action="{{ app_path }}" method="post" id="login-form">{% csrf_token %}
+                        <table>
+                            <tr>
+                                <td><input placeholder="username" type="text" name="username" id="id_username" class="required"/></td>
+                            </tr>
+                            <tr>
+                                <td><input placeholder="password" type="password" name="password" id="id_password" class="required" /></td>
+                            </tr>
+                            
+                        </table>
+                        <input type="submit" value="log in" class="login" />
+                    </form>
+                </div>
+            </div>
+        <p class="text">jOOble</p>
+        <script type="text/javascript">
+            document.getElementById('id_username').focus()
+        </script>
+        </body>
+    </html>

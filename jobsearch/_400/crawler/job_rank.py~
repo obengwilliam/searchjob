@@ -1,4 +1,5 @@
 def compute_ranks(graph):
+  try:
     """
     The dumping factore depicts that there is an 80% chance that
     a user will continue on links at each page.
@@ -25,7 +26,11 @@ def compute_ranks(graph):
             newranks[page] = newrank
         ranks = newranks
     return ranks
-
+  except:
+	
+	print 'problem from page rank algorithm'
+	db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
+        return {}
 
 
 

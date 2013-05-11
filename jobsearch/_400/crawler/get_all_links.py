@@ -5,10 +5,29 @@ making use of the class get_next_target class
 
 
 
+try:
+	'''
+        	Making a global connection to the Mongodb database
+	'''
+        from pymongo import MongoClient
+        
+        connection=MongoClient()
+
+        db=connection.jobsdbs
+	
+ 	assert db.connection==connection
+       
+except:
+        print 'connection problem in start_Crawler.py'
+
+
+
+
 
 from seed import check_if_seed_hostname
 
 from urlparse import urlparse,urljoin
+import traceback
 
 def links(content_soup,url):
       links = []
@@ -55,7 +74,10 @@ def links(content_soup,url):
       except:
            import sys
            print 'Error in get_all_links.py '+url
-           print sys.exc_info()
+           print sys.exc_info(), traceback.print_exc()
+           try: db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'from_module':str(__file__)})
+           except: return links
+          
            return links
       links=list(set(links))
       return links
@@ -70,9 +92,9 @@ if __name__=='__main__':
     socket.setdefaulttimeout(timeout)
     from bs4 import BeautifulSoup as soup
     from urllib2 import urlopen
-    c=urlopen('http://jobs.classifieds1000.com/Ghana/Internet_Jobs/i_would_like_to_be_a_vender')
+    c=urlopen('http://www.jobberman.com.gh/job/6830/senior-lecturer-school-of-theology-and-mission-at-central-university-college/')
     page=c.read();
 
-    print links(soup(page,'lxml'),'http://www.ghanacurrentjobs.com/'),
+    print links(soup(page,'lxml'),'http://www.jobberman.com.gh/job/6830/senior-lecturer-school-of-theology-and-mission-at-central-university-college/'),
 else:
     pass

@@ -29,6 +29,17 @@ DATABASES = {
 # timezone as the operating system.
 # If running in a Windows environment this must be set to the same as your
 # system time zone.
+
+
+
+
+from django.conf.global_settings import TEMPLATE_CONTEXT_PROCESSORS
+
+
+TEMPLATE_CONTEXT_PROCESSORS += (
+    'django.core.context_processors.request',
+)
+
 TIME_ZONE = 'Africa/Accra'
 
 # Language code for this installation. All choices can be found here:
@@ -113,7 +124,7 @@ TEMPLATE_DIRS = (
     os.path.join(SITE_ROOT,'templates'),
 )
 
-CRON_POLLING_FREQUENCY = 3
+
 
 INSTALLED_APPS = (
     'django.contrib.auth',
@@ -122,12 +133,12 @@ INSTALLED_APPS = (
     'django.contrib.sites',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-
     'django.contrib.admin',
     'djangotoolbox',
     'django_mongodb_engine',
     'crawler',
     'search',
+   
     # Uncomment the next line to enable the admin:
     # 'django.contrib.admin',
     # Uncomment the next line to enable admin documentation:

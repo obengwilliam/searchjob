@@ -3,6 +3,7 @@
 
 {% block title %}{{ title }} | {% trans 'Jooble site admin' %}{% endblock %}
 {% block extrastyle %}
+<link rel=”stylesheet” type=”text/css” href=”/static/css/grappelli.css” >
 <style>
 
 #header{ background-color: #C0C0C0;}
@@ -13,7 +14,7 @@
 {% endblock %}
 
 {% block branding %}
-<h1 id="site-name">{% trans 'di administration' %}</h1>
+<h1 id="site-name">{% trans 'Jooble administration' %}</h1>
 {% endblock %}
 
 {% block nav-global %}{% endblock %}

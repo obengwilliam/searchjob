@@ -24,6 +24,31 @@ from stemming.porter2 import stem
 import re
 from stopwords import stopword
 from hashlib import sha224
+from bs4 import BeautifulSoup as soup
+import sys
+from datetime import datetime
+import traceback
+from bs4 import BeautifulSoup as soup
+
+
+
+try:
+	'''
+        	Making a global connection to the Mongodb database
+	'''
+        from pymongo import MongoClient
+        
+        connection=MongoClient()
+
+        db=connection.jobsdbs
+	
+ 	assert db.connection==connection
+       
+except:
+        print 'connection problem in indexpg.py'
+
+
+
 
 
 
@@ -38,9 +63,26 @@ def visible(element):
 
 
 def make_index( url, content_soup):
-    docdigest=sha224(str(content_soup)).hexdigest()
-    texts=content_soup.findAll(text=True)
-   
+    if content_soup==soup('','lxml'):
+       print 'Cannot be indexed #CoNTeNT EmptY....'
+      
+       return ''
+ 	
+    docdigest=sha224(content_soup.body.encode('utf-8')).hexdigest()
+    
+    texts=soup(content_soup.get_text( ),'lxml').findAll(text=True)
+
+   #obtaining meta info
+    meta_info=[]
+    
+    for i in  content_soup.findAll('meta'):
+       try:
+         if i['content']:
+            for i in i['content'].split():
+                 meta_info.append(i)
+       except:
+		pass
+    
    
     '''
     (str(),str())->()
@@ -78,22 +120,20 @@ def make_index( url, content_soup):
        #content=content.encode('ascii','ignore')
        
        
+       #print soup(content,'lxml')
+       #print content
 
-       page_body=' '.join(content.split()[:20]).lower()
-       print page_body
+       if meta_info:
+           
+          page_body=' '.join(meta_info).lower()
+       else:
+           page_body=' '.join(content.split()[:20]).lower()
        
        
     except:
-      
-             
-               import sys
-               print 'problem with obtaining index from the make_index module','.......',sys.exc_info()
-               from pymongo import MongoClient
-               from datetime import datetime
                date=datetime.today()
-               connection=MongoClient()
-               db=connection.jobsdbs
                db.crawler_error_log.insert({'error_type':str(sys.exc_info()),'date':date,'from_module':str(__file__)})
+               print 'problem with obtaining index from the make_index module','.......',traceback.print_exc()
                return
     
     #content=content.encode('ascii','ignore')
@@ -156,7 +196,8 @@ def make_index( url, content_soup):
            
            	#if word=='code':
            	#to index i stem every word and a url a location, etc. 
-           	#add_to_search_index(stem(word),url,title,page_body,location,count,docdigest)
+           	add_to_search_index(stem(word),url,title,page_body,location,count,docdigest)
+                
           
            	#may be we add the location of the word in the document
            
@@ -176,6 +217,7 @@ if __name__=='__main__':
        for i in glob('check*.html'):
           opened=open(i,'rb')
           page=opened.read()
+          print i
           make_index( i, soup(page,'lxml'))
           #profile.run("make_index( i, soup(page,'lxml'))") 
          
